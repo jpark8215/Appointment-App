@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.ComboBox?>
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateCustomerController">
+
+    <children>
+        <Button fx:id="cancelButton" layoutX="729.0" layoutY="354.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel" />
+        <Label layoutX="14.0" layoutY="16.0" text="Update Customer">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="customerIdField" disable="true" editable="false" layoutX="125.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" />
+        <TextField fx:id="nameField" layoutX="125.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" promptText="Name Required" />
+        <TextField fx:id="addressField" layoutX="125.0" layoutY="135.0" prefHeight="25.0" prefWidth="150.0" promptText="Address Required" />
+        <TextField fx:id="phoneField" layoutX="125.0" layoutY="295.0" prefHeight="25.0" prefWidth="150.0" promptText="Phone Required" />
+        <Label layoutX="25.0" layoutY="55.0" prefHeight="25.0" text="Customer ID" />
+        <Label layoutX="25.0" layoutY="95.0" prefHeight="25.0" text="Name" />
+        <Label layoutX="25.0" layoutY="135.0" prefHeight="25.0" text="Address" />
+        <Label layoutX="25.0" layoutY="255.0" prefHeight="25.0" text="Country" />
+        <Label layoutX="25.0" layoutY="295.0" prefHeight="25.0" text="Phone" />
+        <Button fx:id="saveButton" layoutX="673.0" layoutY="354.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save" />
+        <TextField fx:id="postalCodeField" layoutX="125.0" layoutY="175.0" prefHeight="25.0" prefWidth="150.0" promptText="Zip Code Required" />
+        <Label layoutX="25.0" layoutY="175.0" prefHeight="25.0" text="Zip Code" />
+        <Label layoutX="305.0" layoutY="20.0" text="Customer's Appointments">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <TableView fx:id="associatedAppointmentTableView" layoutX="305.0" layoutY="55.0" prefHeight="250.0" prefWidth="480.0">
+            <columns>
+                <TableColumn fx:id="appointmentIDColumn" prefWidth="65.0" text="Appt ID" />
+                <TableColumn fx:id="titleColumn" prefWidth="100.0" text="Title" />
+                <TableColumn fx:id="typeColumn" prefWidth="100.0" text="Type" />
+                <TableColumn fx:id="startDateColumn" prefWidth="110.0" text="Start Date" />
+                <TableColumn fx:id="endDateColumn" prefWidth="110.0" text="End Date" />
+            </columns>
+        </TableView>
+        <Button layoutX="306.0" layoutY="320.0" mnemonicParsing="false" onAction="#UpdateAppointmentHandler" prefWidth="135.0" text="Update Appointment" />
+        <Button layoutX="306.0" layoutY="354.0" mnemonicParsing="false" onAction="#DeleteAppointmentHandler" prefWidth="135.0" text="Delete Appointment" />
+        <Label fx:id="timeZoneLabel" layoutX="663.0" layoutY="16.0" prefHeight="25.0" text="Your timezone: UTC" textFill="#0558dd">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label layoutX="545.0" layoutY="324.0" text="Appointment times shown in your time zone" />
+      <ComboBox fx:id="divisionComboBox" layoutX="125.0" layoutY="215.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="215.0" prefHeight="25.0" text="1st Level Division" />
+      <ComboBox fx:id="countryComboBox" layoutX="125.0" layoutY="255.0" prefWidth="150.0" />
+    </children>
+
+</AnchorPane>

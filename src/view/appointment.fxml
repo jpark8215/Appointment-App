@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentController">
+
+    <children>
+        <Button fx:id="ExitButton" layoutX="915.0" layoutY="361.0" mnemonicParsing="false" onAction="#ExitHandler" text="Exit" />
+
+        <Label layoutX="15.0" layoutY="10.0" text="Appointment">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+      <RadioButton fx:id="weekAppointment" layoutX="438.0" layoutY="19.0" mnemonicParsing="false" onAction="#weekAppointmentView" text="Week View">
+         <toggleGroup>
+            <ToggleGroup fx:id="appointmentView" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="monthAppointment" layoutX="322.0" layoutY="19.0" mnemonicParsing="false" onAction="#monthAppointmentView" text="Month View" toggleGroup="$appointmentView" />
+      <RadioButton fx:id="defaultAppointment" layoutX="210.0" layoutY="19.0" mnemonicParsing="false" onAction="#defaultAppointmentView" selected="true" text="Default View" toggleGroup="$appointmentView" />
+        <TableView fx:id="appointmentTableView" layoutX="10.0" layoutY="53.0" prefHeight="297.0" prefWidth="940.0">
+            <columns>
+                <TableColumn fx:id="AppointmentIdCol" prefWidth="75.0" text="Appt ID" />
+                <TableColumn fx:id="TitleCol" prefWidth="100.0" text="Title" />
+                <TableColumn fx:id="DescriptionCol" prefWidth="120.0" text="Description" />
+                <TableColumn fx:id="LocationCol" prefWidth="85.0" text="Location" />
+                <TableColumn fx:id="ContactCol" prefWidth="85.0" text="Contact" />
+            <TableColumn fx:id="TypeCol" prefWidth="70.0" text="Type" />
+            <TableColumn fx:id="StartCol" prefWidth="125.0" text="Start Date/Time" />
+            <TableColumn fx:id="EndCol" prefWidth="125.0" text="End Date/Time" />
+            <TableColumn fx:id="CustomerIdCol" text="Customer ID" />
+            <TableColumn fx:id="UserIdCol" prefWidth="75.0" text="User ID" />
+            </columns>
+        </TableView>
+      <Button fx:id="customerButton" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#customerButtonHandler" text="Customers" />
+    </children>
+
+</AnchorPane>
