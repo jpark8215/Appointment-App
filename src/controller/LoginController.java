@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -64,33 +66,33 @@ public class LoginController implements Initializable {
 
         Locale.setDefault(new Locale("fr"));
 
-            //Display login form in English and French
-            try {
-                ResourceBundle rb = ResourceBundle.getBundle("login", Locale.getDefault());
+        //Display login form in English and French
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("login", Locale.getDefault());
 
-                if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr")) {
-                    Username.setPromptText(rb.getString("Username"));
-                    Password.setPromptText(rb.getString("Password"));
-                    LoginButton.setText(rb.getString("LoginButton"));
+            if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr")) {
+                Username.setPromptText(rb.getString("Username"));
+                Password.setPromptText(rb.getString("Password"));
+                LoginButton.setText(rb.getString("LoginButton"));
 
+            } else {
+                if (Locale.getDefault().getLanguage().equals("fr")) {
+                    JOptionPane.showMessageDialog(null, "Aucune langue appropriée n'a été trouvée.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (Locale.getDefault().getLanguage().equals("fr")) {
-                        JOptionPane.showMessageDialog(null, "Aucune langue appropriée n'a été trouvée.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No appropriate language was found.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(null, "No appropriate language was found.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-            //Determine User Location and display in label
-            try {
-                TimeZone.setText(String.valueOf(ZoneId.systemDefault()));
+        //Determine User Location and display in label
+        try {
+            TimeZone.setText(String.valueOf(ZoneId.systemDefault()));
 
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
+}

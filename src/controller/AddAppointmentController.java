@@ -1,14 +1,37 @@
 package controller;
 
+import database.DBAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import model.Appointment;
+
+import java.util.Random;
 
 public class AddAppointmentController {
+
+    /**
+     * Generate a random number for appointment.
+     * Check existing appointment numbers to confirm for duplicates.
+     * @return Random appointment ID.
+     */
+    Random random = new Random();
+    int appointmentId;
+
+
+    private int assignAppointmentId() {
+        int randomAppointmentId;
+        randomAppointmentId = random.nextInt(1000);
+
+        for (Appointment appointment : DBAccess.getAllAppointments() ) {
+            if (appointmentId == randomAppointmentId) {
+                boolean isMatch = false;
+                assignAppointmentId();
+            }
+        }
+        return randomAppointmentId;
+    }
+
 
     @FXML
     private TextField AppointmentIdField;

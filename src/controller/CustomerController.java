@@ -13,7 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Customers;
+import model.Customer;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -26,22 +26,22 @@ public class CustomerController implements Initializable {
     private Button returnButton;
 
     @FXML
-    private TableView<Customers> customerTable;
+    private TableView<Customer> customerTable;
 
     @FXML
-    private TableColumn<Customers, Integer> customerIdCol;
+    private TableColumn<Customer, Integer> customerIdCol;
 
     @FXML
-    private TableColumn<Customers, String> customerNameCol;
+    private TableColumn<Customer, String> customerNameCol;
 
     @FXML
-    private TableColumn<Customers, String> customerAddressCol;
+    private TableColumn<Customer, String> customerAddressCol;
 
     @FXML
-    private TableColumn<Customers, String> customerPostalCodeCol;
+    private TableColumn<Customer, String> customerPostalCodeCol;
 
     @FXML
-    private TableColumn<Customers, String> customerPhoneCol;
+    private TableColumn<Customer, String> customerPhoneCol;
 
 
 
@@ -93,8 +93,8 @@ public class CustomerController implements Initializable {
 //        }
     }
 
-    private static Customers selectedCustomer;
-    public static Customers getCustomerToUpdate() {
+    private static Customer selectedCustomer;
+    public static Customer getCustomerToUpdate() {
         return selectedCustomer;
     }
 
@@ -133,11 +133,11 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        customerIdCol.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerId"));
-        customerNameCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));
-        customerAddressCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerAddress"));
-        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerPostalCode"));
-        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerPhone"));
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
+        customerNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
+        customerAddressCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerAddress"));
+        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPostalCode"));
+        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPhone"));
 
         customerTable.setItems(DBAccess.getAllCustomers());
 

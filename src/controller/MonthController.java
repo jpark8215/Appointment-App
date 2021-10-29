@@ -374,19 +374,29 @@ public class MonthController {
     }
 
     @FXML
-    void defaultAppointmentView(ActionEvent event) {
-
+    void defaultAppointmentView(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/appointment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
     void monthAppointmentView(ActionEvent event) throws IOException {
-
+        Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/month.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
     void weekAppointmentView(ActionEvent event) throws IOException {
-
+        Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/week.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
+
 
 }
 

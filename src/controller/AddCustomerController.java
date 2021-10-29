@@ -1,29 +1,26 @@
 package controller;
 
 import database.DBAccess;
-import database.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Countries;
-import model.Customers;
-import model.Divisions;
+import model.Country;
+import model.Customer;
+import model.Division;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 public class AddCustomerController implements Initializable {
 
@@ -40,7 +37,7 @@ public class AddCustomerController implements Initializable {
         int randomCustomerId;
         randomCustomerId = random.nextInt(1000);
 
-        for (Customers customers : DBAccess.getAllCustomers() ) {
+        for (Customer customer : DBAccess.getAllCustomers() ) {
             if (customerId == randomCustomerId) {
                 boolean isMatch = false;
                 assignCustomerId();
@@ -75,10 +72,10 @@ public class AddCustomerController implements Initializable {
     private ChoiceBox<?> userBox;
 
     @FXML
-    private ComboBox<Countries> countryComboBox;
+    private ComboBox<Country> countryComboBox;
 
     @FXML
-    private ComboBox<Divisions> divisionComboBox;
+    private ComboBox<Division> divisionComboBox;
 
     @FXML
     void CancelButtonHandler(ActionEvent event) throws IOException {
@@ -98,8 +95,8 @@ public class AddCustomerController implements Initializable {
         String newCustomerAddress = addressField.getText();
         String newCustomerPostalCode = postalCodeField.getText();
         String newCustomerPhone = phoneField.getText();
-        ComboBox<Countries> countryComboBox = this.countryComboBox;
-        ComboBox<Divisions> divisionsComboBox = this.divisionComboBox;
+        ComboBox<Country> countryComboBox = this.countryComboBox;
+        ComboBox<Division> divisionsComboBox = this.divisionComboBox;
 
         try {
             if (newCustomerName.isEmpty()) {
@@ -118,8 +115,8 @@ public class AddCustomerController implements Initializable {
                 int confirmed = JOptionPane.showConfirmDialog(null, "Do you want to save and return to Customer?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
                 if ( confirmed == JOptionPane.YES_OPTION) {
-                    Customers newCustomer = new Customers(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, newCustomerPhone);
-                    Customers.addCustomer(newCustomer);
+                    Customer newCustomer = new Customer(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, newCustomerPhone);
+                    Customer.addCustomer(newCustomer);
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     Parent scene = FXMLLoader.load(getClass().getResource("/view/customer.fxml"));
                     stage.setScene(new Scene(scene));
@@ -132,47 +129,13 @@ public class AddCustomerController implements Initializable {
         }
     }
 
-//    private void initializeDivision() {
-//
-//        try {
-//            Countries country = countryComboBox.getValue();
-//
-//            String sql = "SELECT division.division "
-//                    + "FROM division, country "
-//                    + "WHERE division.countryId = country.countryId "
-//                    + "AND country.country = \"" + country + "\"";
-//
-//            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//            divisionComboBox.getItems().clear();
-//            while (rs.next()) {
-//
-//                divisionComboBox.getItems().add(1, divisionComboBox.getValue());
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//    }
-//
-//    private void initializeCountry() {
-//
-//        try {
-//            String sql = "SELECT country FROM country";
-//            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//
-//                countryComboBox.getItems().add(1, countryComboBox.getValue());
-//
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//
-//        }
-//
-//    }
+@FXML
+void userCountryChoice(ActionEvent event) {
+
+    divisionComboBox.setPromptText("Select Division");
+    divisionComboBox.setItems(DBAccess.getFilteredDivisions(countryComboBox.getValue()));
+
+}
 
 
     @Override
@@ -181,11 +144,10 @@ public class AddCustomerController implements Initializable {
         customerIdField.setText(Integer.toString(customerId));
         customerIdField.setEditable(false);
 
+
         countryComboBox.setItems(DBAccess.getAllCountries());
         countryComboBox.setPromptText("Select Country");
 
-//        divisionComboBox.setItems(DBAccess.getAllDivisions());
-//        divisionComboBox.setPromptText("Select Division");
 
     }
 }

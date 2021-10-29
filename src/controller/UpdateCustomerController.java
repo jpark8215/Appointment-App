@@ -11,10 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Appointments;
-import model.Countries;
-import model.Customers;
-import model.Divisions;
+import model.Appointment;
+import model.Country;
+import model.Customer;
+import model.Division;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class UpdateCustomerController implements Initializable {
     /**
      * Customer selected in customerController.
      */
-    Customers selectedCustomer;
+    Customer selectedCustomer;
 
 
     @FXML
@@ -53,42 +53,42 @@ public class UpdateCustomerController implements Initializable {
     private TextField postalCodeField;
 
     @FXML
-    private TableView<Appointments> associatedAppointmentTableView;
+    private TableView<Appointment> associatedAppointmentTableView;
 
     @FXML
-    private TableColumn<Appointments, Integer> appointmentIDColumn;
+    private TableColumn<Appointment, Integer> appointmentIDColumn;
 
     @FXML
-    private TableColumn<Appointments, String> titleColumn;
+    private TableColumn<Appointment, String> titleColumn;
 
     @FXML
-    private TableColumn<Appointments, String> typeColumn;
+    private TableColumn<Appointment, String> typeColumn;
 
     @FXML
-    private TableColumn<Appointments, LocalDateTime> startDateColumn;
+    private TableColumn<Appointment, LocalDateTime> startDateColumn;
 
     @FXML
-    private TableColumn<Appointments, LocalDateTime> endDateColumn;
+    private TableColumn<Appointment, LocalDateTime> endDateColumn;
 
     @FXML
     private Label timeZoneLabel;
 
     @FXML
-    private ComboBox<Divisions> divisionComboBox;
+    private ComboBox<Division> divisionComboBox;
 
     @FXML
-    private ComboBox<Countries> countryComboBox;
+    private ComboBox<Country> countryComboBox;
 
 
     /**
      * List of associated appointments with the customer.
      */
-    private final ObservableList<Appointments> associatedAppointment = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> associatedAppointment = FXCollections.observableArrayList();
 
 
     @FXML
     void DeleteAppointmentHandler(ActionEvent event) {
-        Appointments selectedAppointment = associatedAppointmentTableView.getSelectionModel().getSelectedItem();
+        Appointment selectedAppointment = associatedAppointmentTableView.getSelectionModel().getSelectedItem();
 
         if (selectedAppointment == null) {
             //        JOptionPane.showMessageDialog(null, "Please select a customer.", "Error", JOptionPane.ERROR_MESSAGE);

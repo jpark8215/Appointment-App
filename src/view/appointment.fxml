@@ -28,10 +28,10 @@
       <RadioButton fx:id="defaultAppointment" layoutX="210.0" layoutY="19.0" mnemonicParsing="false" onAction="#defaultAppointmentView" selected="true" text="Default View" toggleGroup="$appointmentView" />
         <TableView fx:id="appointmentTableView" layoutX="10.0" layoutY="53.0" prefHeight="297.0" prefWidth="940.0">
             <columns>
-                <TableColumn fx:id="AppointmentIdCol" prefWidth="75.0" text="Appt ID" />
-                <TableColumn fx:id="TitleCol" prefWidth="100.0" text="Title" />
-                <TableColumn fx:id="DescriptionCol" prefWidth="120.0" text="Description" />
-                <TableColumn fx:id="LocationCol" prefWidth="85.0" text="Location" />
+                <TableColumn fx:id="appointmentIdCol" prefWidth="75.0" text="Appt ID" />
+                <TableColumn fx:id="titleCol" prefWidth="100.0" text="Title" />
+                <TableColumn fx:id="descriptionCol" prefWidth="120.0" text="Description" />
+                <TableColumn fx:id="locationCol" prefWidth="85.0" text="Location" />
                 <TableColumn fx:id="ContactCol" prefWidth="85.0" text="Contact" />
             <TableColumn fx:id="TypeCol" prefWidth="70.0" text="Type" />
             <TableColumn fx:id="StartCol" prefWidth="125.0" text="Start Date/Time" />
