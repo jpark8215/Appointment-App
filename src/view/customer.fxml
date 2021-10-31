@@ -5,23 +5,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
 
     <children>
-        <Button fx:id="returnButton" layoutX="727.0" layoutY="348.0" mnemonicParsing="false" onAction="#returnButtonHandler" text="Return" />
-        <TableView fx:id="customerTable" layoutX="19.0" layoutY="80.0" prefHeight="244.0" prefWidth="760.0">
+        <Button fx:id="returnButton" layoutX="947.0" layoutY="348.0" mnemonicParsing="false" onAction="#returnButtonHandler" text="Return" />
+        <TableView fx:id="customerTable" layoutX="19.0" layoutY="80.0" prefHeight="244.0" prefWidth="980.0">
             <columns>
                 <TableColumn fx:id="customerIdCol" prefWidth="100.0" text="ID" />
                 <TableColumn fx:id="customerNameCol" prefWidth="130.0" text="Name" />
-                <TableColumn fx:id="customerAddressCol" prefWidth="220.0" text="Address" />
+                <TableColumn fx:id="customerAddressCol" prefWidth="200.0" text="Address" />
                 <TableColumn fx:id="customerPostalCodeCol" prefWidth="110.0" text="Zip Code" />
+            <TableColumn fx:id="customerDivisionCol" prefWidth="130.0" text="Division" />
+            <TableColumn fx:id="customerCountryCol" prefWidth="110.0" text="Country" />
                 <TableColumn fx:id="customerPhoneCol" prefWidth="200.0" text="Phone" />
             </columns>
         </TableView>
         <Button layoutX="20.0" layoutY="26.0" mnemonicParsing="false" onAction="#addCustomerHandler" text="Add Customer" />
         <Button layoutX="148.0" layoutY="26.0" mnemonicParsing="false" onAction="#updateCustomerHandler" text="Update Customer / Appointment" />
         <Button layoutX="20.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteCustomerHandler" text="Delete Customer" />
-        <Button layoutX="373.0" layoutY="26.0" mnemonicParsing="false" onAction="#addAppointmentHandler" text="Add Appointment" />
+        <Button layoutX="887.0" layoutY="26.0" mnemonicParsing="false" onAction="#addAppointmentHandler" text="Add Appointment" />
     </children>
 
 </AnchorPane>

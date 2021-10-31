@@ -19,72 +19,54 @@ import model.Division;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 public class UpdateCustomerController implements Initializable {
-
-    /**
-     * Customer selected in customerController.
-     */
-    Customer selectedCustomer;
-
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private TextField customerIdField;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField addressField;
-
-    @FXML
-    private TextField phoneField;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private TextField postalCodeField;
-
-    @FXML
-    private TableView<Appointment> associatedAppointmentTableView;
-
-    @FXML
-    private TableColumn<Appointment, Integer> appointmentIDColumn;
-
-    @FXML
-    private TableColumn<Appointment, String> titleColumn;
-
-    @FXML
-    private TableColumn<Appointment, String> typeColumn;
-
-    @FXML
-    private TableColumn<Appointment, LocalDateTime> startDateColumn;
-
-    @FXML
-    private TableColumn<Appointment, LocalDateTime> endDateColumn;
-
-    @FXML
-    private Label timeZoneLabel;
-
-    @FXML
-    private ComboBox<Division> divisionComboBox;
-
-    @FXML
-    private ComboBox<Country> countryComboBox;
-
 
     /**
      * List of associated appointments with the customer.
      */
     private final ObservableList<Appointment> associatedAppointment = FXCollections.observableArrayList();
-
+    /**
+     * Customer selected in customerController.
+     */
+    Customer selectedCustomer;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private TextField customerIdField;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField addressField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private TextField postalCodeField;
+    @FXML
+    private TableView<Appointment> associatedAppointmentTableView;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentIDColumn;
+    @FXML
+    private TableColumn<Appointment, String> titleColumn;
+    @FXML
+    private TableColumn<Appointment, String> typeColumn;
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> startDateColumn;
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> endDateColumn;
+    @FXML
+    private Label timeZoneLabel;
+    @FXML
+    private ComboBox<Division> divisionComboBox;
+    @FXML
+    private ComboBox<Country> countryComboBox;
 
     @FXML
     void DeleteAppointmentHandler(ActionEvent event) {
@@ -114,7 +96,7 @@ public class UpdateCustomerController implements Initializable {
     @FXML
     void UpdateAppointmentHandler(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/updateAppointment.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateAppointment.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -124,7 +106,7 @@ public class UpdateCustomerController implements Initializable {
         int confirmed = JOptionPane.showConfirmDialog(null, "Return to Customer?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("/view/customer.fxml"));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -138,13 +120,9 @@ public class UpdateCustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        timeZoneLabel.setText(String.valueOf(ZonedDateTime.now()));
+
         customerIdField.setEditable(false);
-
-        countryComboBox.setItems(DBAccess.getAllCountries());
-        countryComboBox.setPromptText("Select Country");
-
-//        divisionComboBox.setItems(DBAccess.getAllDivisions());
-//        divisionComboBox.setPromptText("Select Division");
 
         selectedCustomer = CustomerController.getCustomerToUpdate();
         //    associatedAppointment = selectedCustomer.getAllAssociatedAppointment();
@@ -153,6 +131,8 @@ public class UpdateCustomerController implements Initializable {
         nameField.setText(selectedCustomer.getCustomerName());
         addressField.setText(String.valueOf(selectedCustomer.getCustomerAddress()));
         postalCodeField.setText(String.valueOf(selectedCustomer.getCustomerPostalCode()));
+//        divisionComboBox.setItems(selectedCustomer.getCustomerDivision());
+//        countryComboBox.setItems(selectedCustomer.getCustomerCountry());;
         phoneField.setText(String.valueOf(selectedCustomer.getCustomerPhone()));
 
 
@@ -166,4 +146,3 @@ public class UpdateCustomerController implements Initializable {
 
     }
 }
-

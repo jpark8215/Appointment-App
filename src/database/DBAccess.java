@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class DBAccess {
 
@@ -37,7 +36,9 @@ public class DBAccess {
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from customers";
+            String sql = "Select * from customers" +
+                    " JOIN first_level_divisions AS f ON customers.division_ID = f.division_ID" +
+                    " JOIN countries ON f.country_ID = countries.country_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -46,8 +47,10 @@ public class DBAccess {
                 String customerName = rs.getString("Customer_Name");
                 String customerAddress = rs.getString("Address");
                 String customerPostalCode = rs.getString("Postal_Code");
+                String customerDivision = rs.getString("Division");
+                String customerCountry = rs.getString("Country");
                 String customerPhone = rs.getString("Phone");
-                Customer customer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone);
+                Customer customer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerDivision, customerCountry, customerPhone);
                 customerObservableList.add(customer);
             }
         } catch (SQLException throwable) {
@@ -59,26 +62,21 @@ public class DBAccess {
 
     public static Customer addCustomer(Customer newCustomer) {
 
-        String sql = "INSERT INTO customers ("
-                + " Customer_ID,"
-                + " Customer_Name,"
-                + " Address,"
-                + " Postal_Code,"
-                + " Division,"
-                + " Country,"
-                + " Phone ) VALUES ("
-                + "?, ?, ?, ?, ?, ?, ?)";
-
         try {
+            String sql = "INSERT INTO customers ( Customer_ID, Customer_Name, Address, Postal_Code, Phone ) VALUES ("
+                    +
+                    "?,?,?,?,?)";
+
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, newCustomer.getCustomerId());
             ps.setString(2, newCustomer.getCustomerName());
             ps.setString(3, newCustomer.getCustomerAddress());
             ps.setString(4, newCustomer.getCustomerPostalCode());
-            ps.setString(5, getAllDivisions().toString());
-            ps.setString(6, getAllCountries().toString());
-            ps.setString(7, newCustomer.getCustomerPhone());
+//            ps.setString(5, getAllDivisions().toString());
+//            ps.setString(6, getAllCountries().toString());
+            ps.setString(5, newCustomer.getCustomerPhone());
             ps.executeUpdate();
+
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -154,8 +152,8 @@ public class DBAccess {
                 }
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
 
         } return filteredDivisionObservableList;
     }
@@ -177,8 +175,8 @@ public class DBAccess {
                 String location = rs.getNString("Location");
                 int contactId = rs.getInt("Contact_ID");
                 String type = rs.getNString("Type");
-                LocalDateTime startTime = LocalDateTime.parse(rs.getString("Start"));
-                LocalDateTime endTime = LocalDateTime.parse(rs.getString("End"));
+                String startTime = rs.getString("Start");
+                String endTime = rs.getString("End");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
 

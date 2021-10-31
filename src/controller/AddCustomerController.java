@@ -19,6 +19,7 @@ import model.Division;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -82,7 +83,7 @@ public class AddCustomerController implements Initializable {
         int confirmed = JOptionPane.showConfirmDialog(null, "Return to Customer?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("/view/customer.fxml"));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -94,9 +95,10 @@ public class AddCustomerController implements Initializable {
         String newCustomerName = nameField.getText();
         String newCustomerAddress = addressField.getText();
         String newCustomerPostalCode = postalCodeField.getText();
+        String divisionComboBox = String.valueOf(this.divisionComboBox);
+        String countryComboBox = String.valueOf(this.countryComboBox);
         String newCustomerPhone = phoneField.getText();
-        ComboBox<Country> countryComboBox = this.countryComboBox;
-        ComboBox<Division> divisionsComboBox = this.divisionComboBox;
+
 
         try {
             if (newCustomerName.isEmpty()) {
@@ -115,10 +117,12 @@ public class AddCustomerController implements Initializable {
                 int confirmed = JOptionPane.showConfirmDialog(null, "Do you want to save and return to Customer?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
                 if ( confirmed == JOptionPane.YES_OPTION) {
-                    Customer newCustomer = new Customer(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, newCustomerPhone);
+
+                    Customer newCustomer = new Customer(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, divisionComboBox, countryComboBox, newCustomerPhone);
                     Customer.addCustomer(newCustomer);
+
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                    Parent scene = FXMLLoader.load(getClass().getResource("/view/customer.fxml"));
+                    Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
                     stage.setScene(new Scene(scene));
                     stage.show();
                 }
@@ -129,13 +133,12 @@ public class AddCustomerController implements Initializable {
         }
     }
 
-@FXML
-void userCountryChoice(ActionEvent event) {
+    @FXML
+    public void userCountryChoice(ActionEvent event) {
 
-    divisionComboBox.setPromptText("Select Division");
-    divisionComboBox.setItems(DBAccess.getFilteredDivisions(countryComboBox.getValue()));
+        divisionComboBox.setItems(DBAccess.getFilteredDivisions(countryComboBox.getValue()));
 
-}
+    }
 
 
     @Override
@@ -148,6 +151,7 @@ void userCountryChoice(ActionEvent event) {
         countryComboBox.setItems(DBAccess.getAllCountries());
         countryComboBox.setPromptText("Select Country");
 
-
+//        divisionComboBox.setItems(DBAccess.getAllDivisions());
+        divisionComboBox.setPromptText("Select Country First");
     }
 }

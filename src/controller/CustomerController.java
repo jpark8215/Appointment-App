@@ -18,6 +18,7 @@ import model.Customer;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -41,6 +42,12 @@ public class CustomerController implements Initializable {
     private TableColumn<Customer, String> customerPostalCodeCol;
 
     @FXML
+    private TableColumn<Customer, String> customerDivisionCol;
+
+    @FXML
+    private TableColumn<Customer, String> customerCountryCol;
+
+    @FXML
     private TableColumn<Customer, String> customerPhoneCol;
 
 
@@ -49,7 +56,7 @@ public class CustomerController implements Initializable {
     @FXML
     void addAppointmentHandler(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/addAppointment.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addAppointment.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -57,7 +64,7 @@ public class CustomerController implements Initializable {
     @FXML
     void addCustomerHandler(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/addCustomer.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addCustomer.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -109,7 +116,7 @@ public class CustomerController implements Initializable {
         }else {
 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("/view/updateCustomer.fxml"));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateCustomer.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -123,7 +130,7 @@ public class CustomerController implements Initializable {
         int confirmed = JOptionPane.showConfirmDialog(null, "Return to Appointment View?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("/view/appointment.fxml"));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -133,11 +140,13 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        customerIdCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
-        customerNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
-        customerAddressCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerAddress"));
-        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPostalCode"));
-        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPhone"));
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
+        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
+        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
 
         customerTable.setItems(DBAccess.getAllCustomers());
 

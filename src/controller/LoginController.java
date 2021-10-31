@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -36,7 +37,7 @@ public class LoginController implements Initializable {
     @FXML
     private Label TimeZone;
 
-    private JOptionPane AOptionPane;
+ //   private JOptionPane AOptionPane;
 
     /**
      * @param event Check login ID and password, and open calendar view when processed.
@@ -47,7 +48,7 @@ public class LoginController implements Initializable {
         if (Username.getText().equals("test") && Password.getText().equals("test")) {
 
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/view/appointment.fxml"));
+            scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
 
