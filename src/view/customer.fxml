@@ -15,8 +15,8 @@
                 <TableColumn fx:id="customerNameCol" prefWidth="130.0" text="Name" />
                 <TableColumn fx:id="customerAddressCol" prefWidth="200.0" text="Address" />
                 <TableColumn fx:id="customerPostalCodeCol" prefWidth="110.0" text="Zip Code" />
-            <TableColumn fx:id="customerDivisionCol" prefWidth="130.0" text="Division" />
-            <TableColumn fx:id="customerCountryCol" prefWidth="110.0" text="Country" />
+                <TableColumn fx:id="customerDivisionCol" prefWidth="130.0" text="Division" />
+                <TableColumn fx:id="customerCountryCol" prefWidth="110.0" text="Country" />
                 <TableColumn fx:id="customerPhoneCol" prefWidth="200.0" text="Phone" />
             </columns>
         </TableView>

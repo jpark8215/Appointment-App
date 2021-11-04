@@ -1,12 +1,9 @@
 package model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Locale;
 
 public class Appointment {
     private int appointmentId;
@@ -15,13 +12,13 @@ public class Appointment {
     private String location;
     private int contactId;
     private String type;
-    private String startTime;
-    private String endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private int customerId;
     private int userId;
 
 
-    public Appointment(int appointmentId, String title, String description, String location, int contactId, String type, String startTime, String endTime, int customerId, int userId){
+    public Appointment(int appointmentId, String title, String description, String location, int contactId, String type, Timestamp startTime, Timestamp endTime, int customerId, int userId){
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description ;
@@ -94,66 +91,28 @@ public class Appointment {
     }
 
 
+    private static LocalDateTime formatDate(Timestamp formatDate) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    /**
-     * @return the start date formatted for a sql query
-     */
-    public String getStartTime() { return formatDate(LocalDateTime.parse(startTime)); }
-
-    /**
-     * @return the end date formatted for a sql query
-     */
-    public String getEndTime() { return formatDate(LocalDateTime.parse(endTime)); }
-
-    /**
-     * formats a date for sql queries
-     * @param date the date to format
-     * @return the string for the sql query
-     */
-    private static String formatDate(LocalDateTime date) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSX");
-        return dateTimeFormatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
+        return formatDate.toLocalDateTime();
     }
 
-    /**
-     * @return the start date formatted for display in the table
-     */
-    public String getFormattedStartTime() { return formatLocalDate(LocalDateTime.parse(startTime)); }
+    public LocalDateTime getStartTime() { return formatDate(startTime); }
 
-    /**
-     * @return the end date formatted for display in the table
-     */
-    public String getFormattedEndTime() { return formatLocalDate(LocalDateTime.parse(endTime)); }
 
-    /**
-     * formats a date for display in the table
-     *
-     * @param date the date to format
-     * @return the string to display
-     */
-    public static String formatLocalDate(LocalDateTime date) {
-        DateTimeFormatter localeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.getDefault());
-        return date.format(localeFormatter);
+
+    public LocalDateTime getEndTime() { return formatDate(endTime); }
+
+
+    public static LocalDateTime formatLocalDate(LocalDateTime localFormat) {
+        DateTimeFormatter localeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
+
+        return localFormat;
     }
 
 
-    /**
-     * @return the start time in the local user's time zone
-     */
-    public ZonedDateTime getLocalStartTime() { return ZonedDateTime.ofLocal(LocalDateTime.parse(startTime), ZoneId.systemDefault(), ZoneOffset.UTC); }
+    public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
 
-    /**
-     * @return the end time in the local user's time zone
-     */
-    public ZonedDateTime getLocalEndTime() { return ZonedDateTime.ofLocal(LocalDateTime.parse(endTime), ZoneId.systemDefault(), ZoneOffset.UTC); }
-
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = String.valueOf(startTime);
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = String.valueOf(endTime);
-    }
+    public void setEndTime(Timestamp endTime) { this.endTime = endTime; }
 
 }

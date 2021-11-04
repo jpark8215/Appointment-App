@@ -1,34 +1,36 @@
 package model;
 
+import database.DBAccess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Customer {
+
 
     private int customerId;
     private String customerName;
     private String customerAddress;
     private String customerPostalCode;
     private String customerPhone;
-    private String customerDivision;
+    private int customerDivisionId;
+    public String customerDivision;
+    private int customerCountryId;
     private String customerCountry;
+
+
+
 
     /**
      * Customers constructor
-     @param customerId Initialize ID object
-     @param customerName Initialize name object
-     @param customerAddress Initialize address object
-     @param customerPostalCode Initialize zipcode object
-     @param customerDivision
-     @param customerCountry
-     @param customerPhone Initialize phone object
      */
-    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerDivision, String customerCountry, String customerPhone) {
+    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, int customerDivisionId, String customerDivision, int customerCountryId, String customerCountry, String customerPhone) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
+        this.customerDivisionId = customerDivisionId;
         this.customerDivision = customerDivision;
+        this.customerCountryId = customerCountryId;
         this.customerCountry = customerCountry;
         this.customerPhone = customerPhone;
 
@@ -47,33 +49,39 @@ public class Customer {
 
     public String getCustomerAddress() { return customerAddress; }
 
-    public void setCustomerAddress(String address) { this.customerAddress = address; }
+    public void setCustomerAddress(String customerAddress) { this.customerAddress = customerAddress; }
 
     public String getCustomerPostalCode() {
         return customerPostalCode;
     }
 
-    public void setCustomerPostalCode(String postalCode) { this.customerPostalCode = postalCode; }
+    public void setCustomerPostalCode(String customerPostalCode) { this.customerPostalCode = customerPostalCode; }
 
     public String getCustomerPhone() { return customerPhone; }
 
-    public void setCustomerPhone(String phone) { this.customerPhone = phone; }
+    public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
+
+    public int getCustomerDivisionId() {
+        return customerDivisionId;
+    }
+
+    public void setCustomerDivisionId(int customerDivisionId) { this.customerDivisionId = customerDivisionId; }
 
     public String getCustomerDivision() { return customerDivision; }
 
-    public void setCustomerDivision(String division) { this.customerDivision = division; }
+    public void setCustomerDivision(String customerDivision) { this.customerDivision = customerDivision; }
+
+    public int getCustomerCountryId() { return customerCountryId; }
+
+    public void setCustomerCountryId(int customerCountryId) { this.customerCountryId = customerCountryId; }
 
     public String getCustomerCountry() { return customerCountry; }
 
     public void setCustomerCountry(String customerCountry) { this.customerCountry = customerCountry; }
 
 
-
     public static void addCustomer(Customer newCustomer) {
-        ObservableList <Customer> addCustomer = FXCollections.observableArrayList();
-        addCustomer.add(newCustomer);
     }
-
 
 }
 

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
 import model.Division;
+import model.User;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class AddCustomerController implements Initializable {
     private TextField postalCodeField;
 
     @FXML
-    private ChoiceBox<?> userBox;
+    private ChoiceBox<User> userBox;
 
     @FXML
     private ComboBox<Country> countryComboBox;
@@ -95,8 +96,10 @@ public class AddCustomerController implements Initializable {
         String newCustomerName = nameField.getText();
         String newCustomerAddress = addressField.getText();
         String newCustomerPostalCode = postalCodeField.getText();
-        String divisionComboBox = String.valueOf(this.divisionComboBox);
-        String countryComboBox = String.valueOf(this.countryComboBox);
+        int newCustomerDivisionId =  divisionComboBox.getValue().getDivisionId();
+        String newCustomerDivision = divisionComboBox.getValue().getDivision();
+        int newCustomerCountryId = divisionComboBox.getValue().getCountryId();
+        String newCustomerCountry = String.valueOf(countryComboBox.getValue());
         String newCustomerPhone = phoneField.getText();
 
 
@@ -118,8 +121,14 @@ public class AddCustomerController implements Initializable {
 
                 if ( confirmed == JOptionPane.YES_OPTION) {
 
-                    Customer newCustomer = new Customer(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, divisionComboBox, countryComboBox, newCustomerPhone);
-                    Customer.addCustomer(newCustomer);
+                    Customer newCustomer = new Customer(newCustomerId, newCustomerName, newCustomerAddress, newCustomerPostalCode, newCustomerDivisionId, newCustomerDivision, newCustomerCountryId, newCustomerCountry, newCustomerPhone);
+                    DBAccess.addCustomer(newCustomer);
+
+                    Division newCustomerDiv = new Division(newCustomerDivisionId, newCustomerDivision, newCustomerCountryId);
+                    divisionComboBox.getItems().add(newCustomerDiv);
+
+
+;
 
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
@@ -130,6 +139,7 @@ public class AddCustomerController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 
@@ -146,7 +156,6 @@ public class AddCustomerController implements Initializable {
         customerId = assignCustomerId();
         customerIdField.setText(Integer.toString(customerId));
         customerIdField.setEditable(false);
-
 
         countryComboBox.setItems(DBAccess.getAllCountries());
         countryComboBox.setPromptText("Select Country");

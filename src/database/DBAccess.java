@@ -2,6 +2,7 @@ package database;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import model.Appointment;
 import model.Country;
 import model.Customer;
@@ -36,9 +37,9 @@ public class DBAccess {
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from customers" +
-                    " JOIN first_level_divisions AS f ON customers.division_ID = f.division_ID" +
-                    " JOIN countries ON f.country_ID = countries.country_ID";
+            String sql = "Select * from customers"
+                    + " JOIN first_level_divisions AS f ON customers.division_ID = f.division_ID"
+                    + " JOIN countries ON f.country_ID = countries.country_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -47,10 +48,13 @@ public class DBAccess {
                 String customerName = rs.getString("Customer_Name");
                 String customerAddress = rs.getString("Address");
                 String customerPostalCode = rs.getString("Postal_Code");
+                int customerDivisionId = rs.getInt("Division_ID");
                 String customerDivision = rs.getString("Division");
+                int customerCountryId = rs.getInt("Country_ID");
                 String customerCountry = rs.getString("Country");
                 String customerPhone = rs.getString("Phone");
-                Customer customer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerDivision, customerCountry, customerPhone);
+
+                Customer customer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerDivisionId, customerDivision, customerCountryId, customerCountry, customerPhone);
                 customerObservableList.add(customer);
             }
         } catch (SQLException throwable) {
@@ -60,28 +64,28 @@ public class DBAccess {
         return customerObservableList;
     }
 
-    public static Customer addCustomer(Customer newCustomer) {
+    public static void addCustomer(Customer newCustomer) {
 
         try {
-            String sql = "INSERT INTO customers ( Customer_ID, Customer_Name, Address, Postal_Code, Phone ) VALUES ("
-                    +
-                    "?,?,?,?,?)";
+            String sql = "INSERT INTO customers ( Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID ) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+
             ps.setInt(1, newCustomer.getCustomerId());
             ps.setString(2, newCustomer.getCustomerName());
             ps.setString(3, newCustomer.getCustomerAddress());
             ps.setString(4, newCustomer.getCustomerPostalCode());
-//            ps.setString(5, getAllDivisions().toString());
-//            ps.setString(6, getAllCountries().toString());
             ps.setString(5, newCustomer.getCustomerPhone());
+            ps.setInt(6,newCustomer.getCustomerDivisionId());
             ps.executeUpdate();
 
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return newCustomer;
+
     }
 
 
@@ -159,6 +163,38 @@ public class DBAccess {
     }
 
 
+    public static int getDivisionId (ComboBox<Division> userDivision) {
+        try{
+            String sql = "Select Division_ID From first_level_divisions "
+                    + "WHERE Division_Name = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setString(1, String.valueOf(userDivision));
+            ps.executeUpdate();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int getCountryId (ComboBox<Country> userCountry) {
+        try{
+            String sql = "Select Country_ID From countries "
+                    + "WHERE Country_Name = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setString(1, String.valueOf(userCountry));
+            ps.executeUpdate();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
 
     public static ObservableList <Appointment> getAllAppointments() {
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
@@ -175,8 +211,8 @@ public class DBAccess {
                 String location = rs.getNString("Location");
                 int contactId = rs.getInt("Contact_ID");
                 String type = rs.getNString("Type");
-                String startTime = rs.getString("Start");
-                String endTime = rs.getString("End");
+                Timestamp startTime = rs.getTimestamp("Start");
+                Timestamp endTime = rs.getTimestamp("End");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
 
@@ -190,5 +226,6 @@ public class DBAccess {
 
         }return appointmentObservableList;
     }
+
 
 }

@@ -12,6 +12,9 @@ public class Division {
         this.countryId = countryId;
     }
 
+    public static void add(Division newCustomerDivision) {
+    }
+
 
     public int getDivisionId() { return divisionId; }
 

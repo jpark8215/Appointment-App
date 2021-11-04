@@ -21,25 +21,24 @@
         <TextField fx:id="nameField" layoutX="205.0" layoutY="130.0" prefHeight="25.0" promptText="Customer Name" />
         <TextField fx:id="addressField" layoutX="205.0" layoutY="170.0" prefHeight="25.0" promptText="Customer Address" />
         <TextField fx:id="phoneField" layoutX="205.0" layoutY="330.0" prefHeight="25.0" promptText="Customer Phone" />
-        <Label layoutX="107.0" layoutY="90.0" prefHeight="25.0" text="Customer ID" />
-        <Label layoutX="126.0" layoutY="130.0" prefHeight="25.0" text="Name" />
-        <Label layoutX="120.0" layoutY="170.0" prefHeight="25.0" text="Address" />
-        <Label layoutX="120.0" layoutY="290.0" prefHeight="25.0" text="Country" />
-        <Label layoutX="124.0" layoutY="330.0" prefHeight="25.0" text="Phone" />
+        <Label layoutX="100.0" layoutY="90.0" prefHeight="25.0" text="Customer ID" />
+        <Label layoutX="100.0" layoutY="130.0" prefHeight="25.0" text="Name" />
+        <Label layoutX="100.0" layoutY="170.0" prefHeight="25.0" text="Address" />
+        <Label layoutX="100.0" layoutY="250.0" prefHeight="25.0" text="Country" />
+        <Label layoutX="100.0" layoutY="330.0" prefHeight="25.0" text="Phone" />
         <Button fx:id="saveButton" layoutX="467.0" layoutY="359.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save" />
         <TextField fx:id="postalCodeField" layoutX="205.0" layoutY="210.0" prefHeight="25.0" promptText="Customer Zip Code" />
-        <Label layoutX="117.0" layoutY="210.0" prefHeight="25.0" text="Zip Code" />
+        <Label layoutX="100.0" layoutY="210.0" prefHeight="25.0" text="Zip Code" />
         <Label layoutX="297.0" layoutY="56.0" text="* Required" textFill="RED" />
         <Label layoutX="385.0" layoutY="130.0" prefHeight="25.0" text="*" textFill="RED" />
         <Label layoutX="385.0" layoutY="330.0" prefHeight="25.0" text="*" textFill="RED" />
         <Label layoutX="385.0" layoutY="170.0" prefHeight="25.0" text="*" textFill="RED" />
         <Label layoutX="385.0" layoutY="210.0" prefHeight="25.0" text="*" textFill="RED" />
-        <Label layoutX="476.0" layoutY="56.0" text="User" />
-        <Label layoutX="580.0" layoutY="56.0" text="*" textFill="RED" />
-        <ChoiceBox fx:id="userBox" layoutX="508.0" layoutY="51.0" prefHeight="27.0" prefWidth="57.0" />
-      <Label layoutX="85.0" layoutY="250.0" prefHeight="25.0" text="1st Level Division" />
-      <ComboBox fx:id="countryComboBox" layoutX="205.0" layoutY="290.0" onAction="#userCountryChoice" prefHeight="25.0" prefWidth="149.0" />
-      <ComboBox fx:id="divisionComboBox" layoutX="205.0" layoutY="250.0" prefHeight="25.0" prefWidth="149.0" />
+        <Label layoutX="467.0" layoutY="25.0" text="User" />
+        <ChoiceBox fx:id="userBox" layoutX="516.0" layoutY="20.0" prefHeight="27.0" prefWidth="57.0" />
+      <Label layoutX="100.0" layoutY="290.0" prefHeight="25.0" text="Division" />
+      <ComboBox fx:id="countryComboBox" layoutX="205.0" layoutY="250.0" onAction="#userCountryChoice" prefHeight="25.0" prefWidth="149.0" />
+      <ComboBox fx:id="divisionComboBox" layoutX="205.0" layoutY="290.0" prefHeight="25.0" prefWidth="149.0" />
     </children>
 
 </AnchorPane>

@@ -19,11 +19,10 @@ import model.Division;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
+
+import static java.lang.String.valueOf;
 
 public class UpdateCustomerController implements Initializable {
 
@@ -31,10 +30,13 @@ public class UpdateCustomerController implements Initializable {
      * List of associated appointments with the customer.
      */
     private final ObservableList<Appointment> associatedAppointment = FXCollections.observableArrayList();
-    /**
-     * Customer selected in customerController.
-     */
-    Customer selectedCustomer;
+//    /**
+//     * Customer selected in customerController.
+//     */
+//    Customer selectedCustomer;
+//
+//    Division selectedDivision;
+
     @FXML
     private Button cancelButton;
     @FXML
@@ -117,24 +119,35 @@ public class UpdateCustomerController implements Initializable {
 
     }
 
+
+    @FXML
+    public void userCountryChoice(ActionEvent event) {
+        divisionComboBox.setItems(DBAccess.getFilteredDivisions(countryComboBox.getValue()));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        timeZoneLabel.setText(String.valueOf(ZonedDateTime.now()));
+        timeZoneLabel.setText(TimeZone.getDefault().getID());
 
+        Customer selectedCustomer= CustomerController.getSelectedCustomer();
         customerIdField.setEditable(false);
-
-        selectedCustomer = CustomerController.getCustomerToUpdate();
-        //    associatedAppointment = selectedCustomer.getAllAssociatedAppointment();
-
-        customerIdField.setText(String.valueOf(selectedCustomer.getCustomerId()));
+        customerIdField.setText(valueOf(selectedCustomer.getCustomerId()));
         nameField.setText(selectedCustomer.getCustomerName());
-        addressField.setText(String.valueOf(selectedCustomer.getCustomerAddress()));
-        postalCodeField.setText(String.valueOf(selectedCustomer.getCustomerPostalCode()));
-//        divisionComboBox.setItems(selectedCustomer.getCustomerDivision());
-//        countryComboBox.setItems(selectedCustomer.getCustomerCountry());;
-        phoneField.setText(String.valueOf(selectedCustomer.getCustomerPhone()));
+        addressField.setText(valueOf(selectedCustomer.getCustomerAddress()));
+        postalCodeField.setText(valueOf(selectedCustomer.getCustomerPostalCode()));
+        phoneField.setText(valueOf(selectedCustomer.getCustomerPhone()));
 
+        Division selectedDivision = new Division(selectedCustomer.getCustomerDivisionId(), selectedCustomer.getCustomerDivision(), selectedCustomer.getCustomerCountryId() );
+        divisionComboBox.getItems().add(selectedDivision);
+        divisionComboBox.getSelectionModel().select(selectedDivision);
+
+        countryComboBox.setItems(DBAccess.getAllCountries());
+        Country selectedCountry = new Country(selectedCustomer.getCustomerCountryId(), selectedCustomer.getCustomerCountry());
+//        countryComboBox.getItems().add(selectedCountry);
+       countryComboBox.getSelectionModel().select(selectedCountry);
+
+        //    associatedAppointment = selectedCustomer.getAllAssociatedAppointment();
 
 //        appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 

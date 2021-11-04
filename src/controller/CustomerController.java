@@ -2,6 +2,7 @@ package controller;
 
 
 import database.DBAccess;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
+import model.Division;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -22,6 +25,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
+
+
 
     @FXML
     private Button returnButton;
@@ -42,10 +47,10 @@ public class CustomerController implements Initializable {
     private TableColumn<Customer, String> customerPostalCodeCol;
 
     @FXML
-    private TableColumn<Customer, String> customerDivisionCol;
+    private TableColumn<Customer, Division> customerDivisionCol;
 
     @FXML
-    private TableColumn<Customer, String> customerCountryCol;
+    private TableColumn<Customer, Country> customerCountryCol;
 
     @FXML
     private TableColumn<Customer, String> customerPhoneCol;
@@ -100,10 +105,11 @@ public class CustomerController implements Initializable {
 //        }
     }
 
+
+
+
     private static Customer selectedCustomer;
-    public static Customer getCustomerToUpdate() {
-        return selectedCustomer;
-    }
+    public static Customer getSelectedCustomer() { return selectedCustomer; }
 
     @FXML
     void updateCustomerHandler(ActionEvent event) throws IOException {
@@ -137,18 +143,25 @@ public class CustomerController implements Initializable {
 
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        customerTable.setItems(DBAccess.getAllCustomers());
 
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
-        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
-        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+//        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision")); ;
+//        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+        customerDivisionCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerDivision());
+        });
+        customerCountryCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerCountry());
+        });
 
-        customerTable.setItems(DBAccess.getAllCustomers());
 
 
     }
