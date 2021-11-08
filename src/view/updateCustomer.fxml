@@ -35,13 +35,13 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TableView fx:id="associatedAppointmentTableView" layoutX="305.0" layoutY="55.0" prefHeight="250.0" prefWidth="480.0">
+        <TableView fx:id="associatedAppointmentTable" layoutX="305.0" layoutY="55.0" prefHeight="250.0" prefWidth="480.0">
             <columns>
                 <TableColumn fx:id="appointmentIDColumn" prefWidth="65.0" text="Appt ID" />
-                <TableColumn fx:id="titleColumn" prefWidth="100.0" text="Title" />
-                <TableColumn fx:id="typeColumn" prefWidth="100.0" text="Type" />
-                <TableColumn fx:id="startDateColumn" prefWidth="110.0" text="Start Date" />
-                <TableColumn fx:id="endDateColumn" prefWidth="110.0" text="End Date" />
+                <TableColumn fx:id="titleColumn" prefWidth="70.0" text="Title" />
+                <TableColumn fx:id="typeColumn" prefWidth="110.0" text="Type" />
+                <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
+                <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
             </columns>
         </TableView>
         <Button layoutX="306.0" layoutY="320.0" mnemonicParsing="false" onAction="#UpdateAppointmentHandler" prefWidth="135.0" text="Update Appointment" />

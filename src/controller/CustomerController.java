@@ -2,7 +2,6 @@ package controller;
 
 
 import database.DBAccess;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +23,12 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Customer controller class
+ */
 public class CustomerController implements Initializable {
-
-
+    private static Customer selectedCustomer;
+    public static Customer getSelectedCustomer() { return selectedCustomer; }
 
     @FXML
     private Button returnButton;
@@ -56,16 +58,31 @@ public class CustomerController implements Initializable {
     private TableColumn<Customer, String> customerPhoneCol;
 
 
-
-
+    /**
+     * Opens add appointment view when button is selected
+     */
     @FXML
     void addAppointmentHandler(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addAppointment.fxml")));
-        stage.setScene(new Scene(scene));
-        stage.show();
+
+        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomer == null) {
+            JOptionPane.showMessageDialog(null, "Please select a customer.\n If you are adding an appointment for a new customer, \n please click ADD CUSTOMER button to add a new customer \n before adding an appointment. ", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addAppointment.fxml")));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
 
+
+    /**
+     * Opens add customer view when button is selected
+     */
     @FXML
     void addCustomerHandler(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -74,43 +91,67 @@ public class CustomerController implements Initializable {
         stage.show();
     }
 
+
+    /**
+     * Checks associated appointments for selected customer
+     * Deletes selected customer from database when user confirms
+     */
     @FXML
-    void deleteCustomerHandler(ActionEvent event) {
-//        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
-//
-//        if (selectedProduct == null) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("ERROR");
-//            alert.setContentText("Please select a product.");
-//            Optional<ButtonType> result = alert.showAndWait();
-//        }
-//
-//        else if (!selectedProduct.getAllAssociatedPart().isEmpty()) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("ERROR");
-//            alert.setContentText("Product has associated part.");
-//            Optional<ButtonType> result = alert.showAndWait();
-//        }
-//
-//        else {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("CONFIRMATION");
-//            alert.setContentText("Do you want to delete the selected product?");
-//            Optional<ButtonType> result = alert.showAndWait();
-//
-//            if (result.isPresent() && result.get() == ButtonType.OK) {
-//                Inventory.deleteProduct(selectedProduct);
-//
-//            }
-//        }
+    void deleteCustomerHandler(ActionEvent event) throws IOException {
+
+        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomer == null) {
+            JOptionPane.showMessageDialog(null, "Please select a customer.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else if (!((DBAccess.getAssociatedAppointments(selectedCustomer.getCustomerId())).isEmpty())) {
+
+            int confirmed = JOptionPane.showConfirmDialog(null, "Customer has associated appointment(s). \n The appointment(s) will also be deleted. \n Do you want to continue?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            {
+                if (confirmed == JOptionPane.YES_OPTION) {
+
+                    DBAccess.deleteCustomer(selectedCustomer);
+                    customerTable.setItems(DBAccess.getAllCustomers());
+
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
+                    stage.setScene(new Scene(scene));
+                    stage.show();
+
+                }
+            }
+        } else if ((DBAccess.getAssociatedAppointments(selectedCustomer.getCustomerId())).isEmpty()) {
+
+            int confirmed = JOptionPane.showConfirmDialog(null, "Please confirm to delete the selected customer. \n Are you sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            {
+                if (confirmed == JOptionPane.YES_OPTION) {
+
+                    DBAccess.deleteCustomer(selectedCustomer);
+                    customerTable.setItems(DBAccess.getAllCustomers());
+
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
+                    stage.setScene(new Scene(scene));
+                    stage.show();
+                }
+            }
+        }
+
+        else {
+
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        }
     }
 
 
-
-
-    private static Customer selectedCustomer;
-    public static Customer getSelectedCustomer() { return selectedCustomer; }
-
+    /**
+     * Gets selected customer data and loads in customer update
+     * Opens update customer view when button is selected
+     */
     @FXML
     void updateCustomerHandler(ActionEvent event) throws IOException {
 
@@ -119,7 +160,7 @@ public class CustomerController implements Initializable {
         if (selectedCustomer == null) {
             JOptionPane.showMessageDialog(null, "Please select a customer.", "Error", JOptionPane.ERROR_MESSAGE);
 
-        }else {
+        } else {
 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateCustomer.fxml")));
@@ -129,7 +170,9 @@ public class CustomerController implements Initializable {
     }
 
 
-
+    /**
+     * Returns to appointment view when button is selected
+     */
     @FXML
     void returnButtonHandler(ActionEvent event) throws IOException {
 
@@ -144,6 +187,10 @@ public class CustomerController implements Initializable {
     }
 
 
+    /**
+     * Initializes customer controller
+     * Gets customer data from database and displays on customer table
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         customerTable.setItems(DBAccess.getAllCustomers());
@@ -153,16 +200,12 @@ public class CustomerController implements Initializable {
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-//        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision")); ;
-//        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
-        customerDivisionCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerDivision());
-        });
-        customerCountryCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerCountry());
-        });
-
-
+        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision")); ;
+        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+//        customerDivisionCol.setCellValueFactory(cellData -> {
+//            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerDivision()); });
+//        customerCountryCol.setCellValueFactory(cellData -> {
+//            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerCountry()); });
 
     }
 }

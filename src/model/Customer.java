@@ -1,11 +1,9 @@
 package model;
 
-import database.DBAccess;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+/**
+ * Customer class
+ */
 public class Customer {
-
 
     private int customerId;
     private String customerName;
@@ -17,11 +15,17 @@ public class Customer {
     private int customerCountryId;
     private String customerCountry;
 
-
-
-
     /**
-     * Customers constructor
+     * Customer constructor
+     * @param customerId customerId
+     * @param customerName customerName
+     * @param customerAddress customerAddress
+     * @param customerPostalCode customerPostalCode
+     * @param customerDivisionId customerDivisionId
+     * @param customerDivision customerDivisionId
+     * @param customerCountryId customerCountryId
+     * @param customerCountry customerCountry
+     * @param customerPhone customerPhone
      */
     public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, int customerDivisionId, String customerDivision, int customerCountryId, String customerCountry, String customerPhone) {
         this.customerId = customerId;
@@ -35,7 +39,6 @@ public class Customer {
         this.customerPhone = customerPhone;
 
     }
-
 
     public int getCustomerId() { return customerId; }
 
@@ -79,9 +82,7 @@ public class Customer {
 
     public void setCustomerCountry(String customerCountry) { this.customerCountry = customerCountry; }
 
-
-    public static void addCustomer(Customer newCustomer) {
-    }
-
+//    public static void addCustomer(Customer newCustomer) {
+//    }
 }
 

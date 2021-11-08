@@ -1,16 +1,22 @@
 package controller;
 
 import database.DBAccess;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Appointment;
+import model.Contact;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -37,7 +43,7 @@ public class AppointmentController implements Initializable {
     private RadioButton defaultAppointment;
 
     @FXML
-    private TableView<Appointment> appointmentTableView;
+    private TableView<Appointment> appointmentTable;
 
     @FXML
     private TableColumn<Appointment, Integer> appointmentIdCol;
@@ -52,7 +58,8 @@ public class AppointmentController implements Initializable {
     private TableColumn<Appointment, String> locationCol;
 
     @FXML
-    private TableColumn<Appointment, Integer> contactIdCol;
+//    private TableColumn<Appointment, Integer> contactIdCol;
+private ComboBox<Contact> contactComboBox;
 
     @FXML
     private TableColumn<Appointment, String> typeCol;
@@ -73,7 +80,6 @@ public class AppointmentController implements Initializable {
     private Button customerButton;
 
 
-
     @FXML
     void ExitHandler(ActionEvent event) {
         int confirmed = JOptionPane.showConfirmDialog(null, "Exit Program?", "EXIT", JOptionPane.YES_NO_OPTION);
@@ -81,6 +87,7 @@ public class AppointmentController implements Initializable {
             System.exit(0);
         }
     }
+
 
     @FXML
     void customerButtonHandler(ActionEvent event) throws IOException {
@@ -91,6 +98,7 @@ public class AppointmentController implements Initializable {
             stage.show();
         }
 
+
     @FXML
     void defaultAppointmentView(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
@@ -98,6 +106,7 @@ public class AppointmentController implements Initializable {
         stage.setScene(new Scene(scene));
         stage.show();
     }
+
 
     @FXML
     void monthAppointmentView(ActionEvent event) throws IOException {
@@ -107,6 +116,7 @@ public class AppointmentController implements Initializable {
         stage.show();
     }
 
+
     @FXML
     void weekAppointmentView(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
@@ -115,20 +125,26 @@ public class AppointmentController implements Initializable {
         stage.show();
     }
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        appointmentTable.setItems(DBAccess.getAllAppointments());
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+  //      contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
+        Contact contact = (Contact) DBAccess.getAllContacts();
+        contact.setContactName(customerIdCol.getText());
+
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
-        appointmentTableView.setItems(DBAccess.getAllAppointments());
 
     }
 }

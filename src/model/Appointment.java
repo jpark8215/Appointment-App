@@ -3,9 +3,12 @@ package model;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
+/**
+ * Appointment class
+ */
 public class Appointment {
+
     private int appointmentId;
     private String title;
     private String description;
@@ -17,7 +20,19 @@ public class Appointment {
     private int customerId;
     private int userId;
 
-
+    /**
+     * Appointment constructor
+     * @param appointmentId appointmentId
+     * @param title title
+     * @param description description
+     * @param location location
+     * @param contactId contactId
+     * @param type type
+     * @param startTime startTime
+     * @param endTime endTime
+     * @param customerId customerId
+     * @param userId userId
+     */
     public Appointment(int appointmentId, String title, String description, String location, int contactId, String type, Timestamp startTime, Timestamp endTime, int customerId, int userId){
         this.appointmentId = appointmentId;
         this.title = title;
@@ -30,7 +45,6 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
     }
-
 
     public int getAppointmentId() { return appointmentId; }
 
@@ -92,24 +106,21 @@ public class Appointment {
 
 
     private static LocalDateTime formatDate(Timestamp formatDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         return formatDate.toLocalDateTime();
     }
 
     public LocalDateTime getStartTime() { return formatDate(startTime); }
 
-
-
     public LocalDateTime getEndTime() { return formatDate(endTime); }
 
 
-    public static LocalDateTime formatLocalDate(LocalDateTime localFormat) {
-        DateTimeFormatter localeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
-
-        return localFormat;
-    }
-
+//    public static LocalDateTime formatLocalDate(LocalDateTime localFormat) {
+//        DateTimeFormatter localeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
+//
+//        return localFormat;
+//    }
 
     public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
 

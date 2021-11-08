@@ -20,32 +20,37 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 
+/**
+ * Login controller class
+ */
 public class LoginController implements Initializable {
 
     Stage stage;
     Parent scene;
 
     @FXML
-    private Button LoginButton;
+    private Button loginButton;
 
     @FXML
-    private TextField Password;
+    private TextField password;
 
     @FXML
-    private TextField Username;
+    private TextField username;
 
     @FXML
-    private Label TimeZone;
+    private Label timeZone;
 
- //   private JOptionPane AOptionPane;
+    //   private JOptionPane AOptionPane;
 
     /**
-     * @param event Check login ID and password, and open calendar view when processed.
+     * @param event Checks login ID and password, and open appointment view when processed.
      */
     @FXML
     void loginHandler(ActionEvent event) throws IOException {
 
-        if (Username.getText().equals("test") && Password.getText().equals("test")) {
+        if (username.getText().equals("test") && password.getText().equals("test")) {
+//        if (username.getText().equals("admin") && password.getText().equals("admin")) {
+
 
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
@@ -53,28 +58,31 @@ public class LoginController implements Initializable {
             stage.show();
 
         } else {
-            if(Locale.getDefault().getLanguage().equals("fr")) {
+            if (Locale.getDefault().getLanguage().equals("fr")) {
                 JOptionPane.showMessageDialog(null, "Le nom d’utilisateur et le mot de passe ne correspondaient pas!", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Username and password did not match!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
 
+    /**
+     * Displays translated login page based on system locale
+     * Displays system location
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Locale.setDefault(new Locale("fr"));
 
-        //Display login form in English and French
         try {
             ResourceBundle rb = ResourceBundle.getBundle("login", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr")) {
-                Username.setPromptText(rb.getString("Username"));
-                Password.setPromptText(rb.getString("Password"));
-                LoginButton.setText(rb.getString("LoginButton"));
+                username.setPromptText(rb.getString("Username"));
+                password.setPromptText(rb.getString("Password"));
+                loginButton.setText(rb.getString("LoginButton"));
 
             } else {
                 if (Locale.getDefault().getLanguage().equals("fr")) {
@@ -88,9 +96,8 @@ public class LoginController implements Initializable {
         }
 
 
-        //Determine User Location and display in label
         try {
-            TimeZone.setText(String.valueOf(ZoneId.systemDefault()));
+            timeZone.setText(String.valueOf(ZoneId.systemDefault()));
 
         } catch (Exception e1) {
             e1.printStackTrace();

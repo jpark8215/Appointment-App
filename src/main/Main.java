@@ -12,11 +12,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+import java.util.Objects;
+
+/**
+ * Main class
+ */
+public class Main extends Application {
     @Override
 
     public void start (Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/login.fxml")));
         primaryStage.setTitle("C195 Software 2");
         primaryStage.setScene(new Scene(root, 800,400));
         primaryStage.show();

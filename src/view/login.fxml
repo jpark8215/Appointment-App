@@ -14,10 +14,10 @@
             <Font size="24.0" />
         </font>
     </Label>
-    <TextField fx:id="Username" layoutX="326.0" layoutY="200.0" promptText="Username" />
-    <TextField fx:id="Password" layoutX="326.0" layoutY="237.0" promptText="Password" />
-    <Button fx:id="LoginButton" layoutX="363.0" layoutY="324.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="25.0" prefWidth="75.0" text="Login" textAlignment="CENTER" />
-      <Label fx:id="TimeZone" layoutX="48.0" layoutY="328.0" text="User Location" textAlignment="CENTER" />
+    <TextField fx:id="username" layoutX="326.0" layoutY="200.0" promptText="Username" />
+    <TextField fx:id="password" layoutX="326.0" layoutY="237.0" promptText="Password" />
+    <Button fx:id="loginButton" layoutX="363.0" layoutY="324.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="25.0" prefWidth="75.0" text="Login" textAlignment="CENTER" />
+      <Label fx:id="timeZone" layoutX="48.0" layoutY="328.0" text="User Location" textAlignment="CENTER" />
 </children>
 
 </AnchorPane>

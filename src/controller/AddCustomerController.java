@@ -29,7 +29,6 @@ public class AddCustomerController implements Initializable {
     /**
      * Generate a random number for customer.
      * Check existing customer numbers to confirm for duplicates.
-     * @return Random customer ID.
      */
     Random random = new Random();
     int customerId;
@@ -81,7 +80,7 @@ public class AddCustomerController implements Initializable {
 
     @FXML
     void CancelButtonHandler(ActionEvent event) throws IOException {
-        int confirmed = JOptionPane.showConfirmDialog(null, "Return to Customer?", "EXIT", JOptionPane.YES_NO_OPTION);
+        int confirmed = JOptionPane.showConfirmDialog(null, "Cancel and return to customer view?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
@@ -127,8 +126,6 @@ public class AddCustomerController implements Initializable {
                     Division newCustomerDiv = new Division(newCustomerDivisionId, newCustomerDivision, newCustomerCountryId);
                     divisionComboBox.getItems().add(newCustomerDiv);
 
-
-;
 
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
