@@ -23,17 +23,27 @@ public class Division {
 //    public static void add(Division newCustomerDivision) {
 //    }
 
+    /**
+     * @return divisionId
+     */
     public int getDivisionId() { return divisionId; }
 
     public void setDivisionId(int divisionId) { this.divisionId = divisionId; }
 
+    /**
+     * @return divisionName
+     */
     public String getDivision() { return division; }
 
     public void setDivision(String division) { this.division = division; }
 
+    /**
+     * @return countryId
+     */
     public int getCountryId() { return countryId; }
 
     public void setCountryId(int countryId) { this.countryId = countryId; }
+
 
     /**
      * @return divisionId and divisionName in string

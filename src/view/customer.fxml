@@ -8,8 +8,9 @@
 <AnchorPane prefHeight="400.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
 
     <children>
-        <Button fx:id="returnButton" layoutX="867.0" layoutY="348.0" mnemonicParsing="false" onAction="#returnButtonHandler" text="Return" />
-        <TableView fx:id="customerTable" layoutX="19.0" layoutY="80.0" prefHeight="244.0" prefWidth="900.0">
+      <Button layoutX="689.0" layoutY="13.0" mnemonicParsing="false" onAction="#reportButtonHandle" prefHeight="50.0" text="Report" />
+        <Button fx:id="appointmentButton" layoutX="830.0" layoutY="13.0" mnemonicParsing="false" onAction="#appointmentButtonHandler" prefHeight="50.0" prefWidth="90.0" text="Appointment" />
+        <TableView fx:id="customerTable" layoutX="20.0" layoutY="75.0" prefHeight="300.0" prefWidth="900.0">
             <columns>
                 <TableColumn fx:id="customerIdCol" text="Customer ID" />
                 <TableColumn fx:id="customerNameCol" prefWidth="140.0" text="Name" />
@@ -20,10 +21,9 @@
                 <TableColumn fx:id="customerPhoneCol" prefWidth="170.0" text="Phone" />
             </columns>
         </TableView>
-        <Button layoutX="19.0" layoutY="348.0" mnemonicParsing="false" onAction="#addCustomerHandler" text="Add Customer" />
-        <Button layoutX="19.0" layoutY="26.0" mnemonicParsing="false" onAction="#updateCustomerHandler" text="Update Customer - Appointment" />
-        <Button layoutX="131.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteCustomerHandler" text="Delete Customer" />
-        <Button layoutX="807.0" layoutY="26.0" mnemonicParsing="false" onAction="#addAppointmentHandler" text="Add Appointment" />
+        <Button layoutX="20.0" layoutY="13.0" mnemonicParsing="false" onAction="#addCustomerHandler" prefHeight="50.0" prefWidth="70.0" text="Add Customer" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="125.0" layoutY="13.0" mnemonicParsing="false" onAction="#updateCustomerHandler" prefHeight="50.0" prefWidth="70.0" text="Update Customer" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="231.0" layoutY="13.0" mnemonicParsing="false" onAction="#deleteCustomerHandler" prefHeight="50.0" prefWidth="70.0" text="Delete Customer" textAlignment="CENTER" wrapText="true" />
     </children>
 
 </AnchorPane>

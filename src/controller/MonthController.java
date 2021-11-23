@@ -1,27 +1,38 @@
 package controller;
 
+import database.DBAccess;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Appointment;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class MonthController {
+/**
+ * Month controller class
+ */
+public class MonthController implements Initializable {
 
     @FXML
-    private Button CustomerButton;
+    private Label monthLabel;
 
     @FXML
-    private Label Month;
-
-    @FXML
-    private Label Year;
+    private Button exitButton;
 
     @FXML
     private RadioButton weekAppointment;
@@ -36,365 +47,215 @@ public class MonthController {
     private RadioButton defaultAppointment;
 
     @FXML
-    private GridPane MonthGridPane;
+    private TableView<Appointment> monthAppointmentTable;
 
     @FXML
-    private AnchorPane AnchorPane00;
+    private TableColumn<Appointment, Integer> appointmentIdCol;
 
     @FXML
-    private Label Label00;
+    private TableColumn<Appointment, String> titleCol;
 
     @FXML
-    private ListView<?> ListView00;
+    private TableColumn<Appointment, String> descriptionCol;
 
     @FXML
-    private AnchorPane AnchorPane10;
+    private TableColumn<Appointment, String> locationCol;
 
     @FXML
-    private Label Label10;
+    private TableColumn<Appointment, String> contactNameCol;
 
     @FXML
-    private ListView<?> ListView10;
+    private TableColumn<Appointment, String> typeCol;
 
     @FXML
-    private AnchorPane AnchorPane20;
+    private TableColumn<Appointment, LocalDateTime> startCol;
 
     @FXML
-    private Label Label20;
+    private TableColumn<Appointment, LocalDateTime> endCol;
 
     @FXML
-    private ListView<?> ListView20;
+    private TableColumn<Appointment, Integer> customerIdCol;
 
     @FXML
-    private AnchorPane AnchorPane30;
+    private TableColumn<Appointment, Integer> userIdCol;
 
     @FXML
-    private Label Label30;
+    private Button customerButton;
 
     @FXML
-    private ListView<?> ListView30;
+    private Button deleteButton;
 
     @FXML
-    private AnchorPane AnchorPane40;
+    private Button addAppointmentButton;
 
     @FXML
-    private Label Label40;
+    private Button updateAppointmentButton;
 
-    @FXML
-    private ListView<?> ListView40;
-
-    @FXML
-    private AnchorPane AnchorPane50;
-
-    @FXML
-    private Label Label50;
-
-    @FXML
-    private ListView<?> ListView50;
-
-    @FXML
-    private AnchorPane AnchorPane60;
-
-    @FXML
-    private Label Label60;
-
-    @FXML
-    private ListView<?> ListView60;
-
-    @FXML
-    private AnchorPane AnchorPane01;
-
-    @FXML
-    private Label Label01;
-
-    @FXML
-    private ListView<?> ListView01;
-
-    @FXML
-    private AnchorPane AnchorPane11;
-
-    @FXML
-    private Label Label11;
-
-    @FXML
-    private ListView<?> ListView11;
-
-    @FXML
-    private AnchorPane AnchorPane21;
-
-    @FXML
-    private Label Label21;
-
-    @FXML
-    private ListView<?> ListView21;
-
-    @FXML
-    private AnchorPane AnchorPane31;
-
-    @FXML
-    private Label Label31;
-
-    @FXML
-    private ListView<?> ListView31;
-
-    @FXML
-    private AnchorPane AnchorPane41;
-
-    @FXML
-    private Label Label41;
-
-    @FXML
-    private ListView<?> ListView41;
-
-    @FXML
-    private AnchorPane AnchorPane51;
-
-    @FXML
-    private Label Label51;
-
-    @FXML
-    private ListView<?> ListView51;
-
-    @FXML
-    private AnchorPane AnchorPane61;
-
-    @FXML
-    private Label Label61;
-
-    @FXML
-    private ListView<?> ListView61;
-
-    @FXML
-    private AnchorPane AnchorPane02;
-
-    @FXML
-    private Label Label02;
-
-    @FXML
-    private ListView<?> ListView02;
-
-    @FXML
-    private AnchorPane AnchorPane12;
-
-    @FXML
-    private Label Label12;
-
-    @FXML
-    private ListView<?> ListView12;
-
-    @FXML
-    private AnchorPane AnchorPane22;
-
-    @FXML
-    private Label Label22;
-
-    @FXML
-    private ListView<?> ListView22;
-
-    @FXML
-    private AnchorPane AnchorPane32;
-
-    @FXML
-    private Label Label32;
-
-    @FXML
-    private ListView<?> ListView32;
-
-    @FXML
-    private AnchorPane AnchorPane42;
-
-    @FXML
-    private Label Label42;
-
-    @FXML
-    private ListView<?> ListView42;
 
+    /**
+     * @param event Opens add appointment view
+     */
     @FXML
-    private AnchorPane AnchorPane52;
+    void addAppointmentButtonHandler(ActionEvent event) throws IOException {
 
-    @FXML
-    private Label Label52;
-
-    @FXML
-    private ListView<?> ListView52;
-
-    @FXML
-    private AnchorPane AnchorPane62;
-
-    @FXML
-    private Label Label62;
-
-    @FXML
-    private ListView<?> ListView62;
-
-    @FXML
-    private AnchorPane AnchorPane03;
-
-    @FXML
-    private Label Label03;
-
-    @FXML
-    private ListView<?> ListView03;
-
-    @FXML
-    private AnchorPane AnchorPane13;
-
-    @FXML
-    private Label Label13;
-
-    @FXML
-    private ListView<?> ListView13;
-
-    @FXML
-    private AnchorPane AnchorPane23;
-
-    @FXML
-    private Label Label23;
-
-    @FXML
-    private ListView<?> ListView23;
-
-    @FXML
-    private AnchorPane AnchorPane33;
-
-    @FXML
-    private Label Label33;
-
-    @FXML
-    private ListView<?> ListView33;
-
-    @FXML
-    private AnchorPane AnchorPane43;
-
-    @FXML
-    private Label Label43;
-
-    @FXML
-    private ListView<?> ListView43;
-
-    @FXML
-    private AnchorPane AnchorPane53;
-
-    @FXML
-    private Label Label53;
-
-    @FXML
-    private ListView<?> ListView53;
-
-    @FXML
-    private AnchorPane AnchorPane63;
-
-    @FXML
-    private Label Label63;
-
-    @FXML
-    private ListView<?> ListView63;
-
-    @FXML
-    private AnchorPane AnchorPane04;
-
-    @FXML
-    private Label Label04;
-
-    @FXML
-    private ListView<?> ListView04;
-
-    @FXML
-    private AnchorPane AnchorPane14;
-
-    @FXML
-    private Label Label14;
-
-    @FXML
-    private ListView<?> ListView14;
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addAppointment.fxml")));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
 
-    @FXML
-    private AnchorPane AnchorPane24;
-
-    @FXML
-    private Label Label24;
-
-    @FXML
-    private ListView<?> ListView24;
-
-    @FXML
-    private AnchorPane AnchorPane34;
-
-    @FXML
-    private Label Label34;
-
-    @FXML
-    private ListView<?> ListView34;
 
-    @FXML
-    private AnchorPane AnchorPane44;
-
-    @FXML
-    private Label Label44;
-
-    @FXML
-    private ListView<?> ListView44;
+    private static Appointment selectedAppointment;
 
-    @FXML
-    private AnchorPane AnchorPane54;
+    public static Appointment getSelectedAppointment() { return selectedAppointment; }
 
+    /**
+     * @param event Gets selected appointment data and loads in update appointment view
+     *              Opens update appointment view
+     */
     @FXML
-    private Label Label54;
+    void updateAppointmentButtonHandler (ActionEvent event) throws IOException {
 
-    @FXML
-    private ListView<?> ListView54;
+        selectedAppointment = monthAppointmentTable.getSelectionModel().getSelectedItem();
 
-    @FXML
-    private AnchorPane AnchorPane64;
+        if (selectedAppointment == null) {
+            JOptionPane.showMessageDialog(null, "Please select an appointment.", "Error", JOptionPane.ERROR_MESSAGE);
 
-    @FXML
-    private Label Label64;
+        } else {
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateAppointment.fxml")));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+    }
 
-    @FXML
-    private ListView<?> ListView64;
 
+    /**
+     * @param event Exits application
+     */
     @FXML
-    private GridPane WeekGridPane;
+    void ExitHandler(ActionEvent event) {
+        int confirmed = JOptionPane.showConfirmDialog(null, "Exit Program?", "EXIT", JOptionPane.YES_NO_OPTION);
+        if (confirmed == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }
 
-    @FXML
-    private Label TimeZoneLabelMonth;
 
+    /**
+     * @param event Opens customer view
+     */
     @FXML
     void customerButtonHandler(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/customer.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
-
     }
 
+
+    /**
+     * @param event Deletes selected appointment
+     *              Confirms user choice and displays appointment ID
+     * LAMBDA Displays deleted appointment information
+     */
+    @FXML
+    void deleteButtonHandler(ActionEvent event) throws IOException {
+        Appointment selectedAppointment = monthAppointmentTable.getSelectionModel().getSelectedItem();
+
+        if (selectedAppointment == null) {
+            JOptionPane.showMessageDialog(null, "Please select an appointment.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            int confirmed = JOptionPane.showConfirmDialog(null, "Do you want to delete the appointment?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+            {
+                if (confirmed == JOptionPane.YES_OPTION) {
+//                if (alert.getResult() == ButtonType.YES) {
+                    DBAccess.deleteAppointment(selectedAppointment);
+                    monthAppointmentTable.setItems(DBAccess.getAllAppointments());
+
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Cancel confirmation");
+//                        alert.setHeaderText("Do you want to delete the following appointment?");
+                        alert.setHeaderText( "Appointment ID : " + selectedAppointment.getAppointmentId() + " & Type : " + selectedAppointment.getType() + " deleted");
+                        alert.showAndWait();
+                    });
+                } else {
+
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateCustomer.fxml")));
+                    stage.setScene(new Scene(scene));
+                    stage.show();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * @param event Opens main appointment view
+     */
     @FXML
     void defaultAppointmentView(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/appointment.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
+
+    /**
+     * @param event Opens month view
+     */
     @FXML
     void monthAppointmentView(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/month.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/month.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
+
+    /**
+     * @param event Opens week view
+     */
     @FXML
     void weekAppointmentView(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((RadioButton) event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/week.fxml"));
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/week.fxml")));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
 
+    /**
+     * Gets appointment data from database for the month and loads data into appointment table
+     * Sets combo box on contact column in table
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        Calendar calendar = Calendar.getInstance();
+        monthLabel.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
+
+        monthAppointmentTable.setItems(DBAccess.getMonthlyAppointments());
+        appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        startCol.setCellValueFactory(new PropertyValueFactory<>("startDateTime")) ;
+        endCol.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        monthAppointmentTable.setEditable(true);
+        contactNameCol.setCellFactory(ComboBoxTableCell.forTableColumn());
+        contactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+
+    }
 }
-
-
-

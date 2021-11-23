@@ -21,7 +21,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 import static java.lang.String.valueOf;
 
@@ -29,9 +28,6 @@ import static java.lang.String.valueOf;
  * Update customer controller class
  */
 public class UpdateCustomerController implements Initializable {
-
-    private static Appointment selectedAppointment;
-    public static Appointment getSelectedAppointment() { return selectedAppointment; }
 
     @FXML
     private Button cancelButton;
@@ -73,9 +69,6 @@ public class UpdateCustomerController implements Initializable {
     private TableColumn<Appointment, LocalDateTime> endDateColumn;
 
     @FXML
-    private Label timeZoneLabel;
-
-    @FXML
     private ComboBox<Division> divisionComboBox;
 
     @FXML
@@ -83,7 +76,8 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * Deletes selected associated appointment when user confirms
+     * @param event Deletes selected associated appointment
+     *              Displays deleted appointment information
      */
     @FXML
     void DeleteAppointmentHandler(ActionEvent event) throws IOException {
@@ -98,6 +92,15 @@ public class UpdateCustomerController implements Initializable {
                 if (confirmed == JOptionPane.YES_OPTION) {
                     DBAccess.deleteAppointment(selectedAppointment);
                     associatedAppointmentTable.setItems(DBAccess.getAssociatedAppointments(selectedAppointment.getCustomerId()));
+
+//                    Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Cancel Confirmation");
+//                        alert.setHeaderText("Do you want to delete the following appointment?");
+                    alert.setHeaderText( "Appointment ID : " + selectedAppointment.getAppointmentId() + " & Type : " + selectedAppointment.getType() + " deleted");
+                    alert.showAndWait();
+//                    });
+
                 }
                 else {
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -105,38 +108,17 @@ public class UpdateCustomerController implements Initializable {
                     stage.setScene(new Scene(scene));
                     stage.show();
                 }
-                }
             }
-        }
-
-
-    /**
-     * Gets selected appointment data and loads in appointment update
-     * Opens update appointment view
-     */
-    @FXML
-    void UpdateAppointmentHandler(ActionEvent event) throws IOException {
-
-        selectedAppointment = associatedAppointmentTable.getSelectionModel().getSelectedItem();
-
-        if (selectedAppointment == null) {
-            JOptionPane.showMessageDialog(null, "Please select an appointment.", "Error", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/updateAppointment.fxml")));
-            stage.setScene(new Scene(scene));
-            stage.show();
         }
     }
 
 
     /**
-     * Returns to customer view when user confirms
+     * @param event Returns to customer view
      */
     @FXML
     void cancelButtonHandler(ActionEvent event) throws IOException {
-        int confirmed = JOptionPane.showConfirmDialog(null, "Return to Customer?", "EXIT", JOptionPane.YES_NO_OPTION);
+        int confirmed = JOptionPane.showConfirmDialog(null, "Return to Customer view?", "EXIT", JOptionPane.YES_NO_OPTION);
 
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -148,45 +130,48 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * Checks required fields are completed
-     * Saves updated customer data in database
+     * @param event Checks customer requirements and updates selected customer
      */
     @FXML
     void saveButtonHandler(ActionEvent event) {
-        int updateCustomerId = Integer.parseInt(customerIdField.getText());
+
         String updateCustomerName = nameField.getText();
         String updateCustomerAddress = addressField.getText();
         String updateCustomerPostalCode = postalCodeField.getText();
-        int updateCustomerDivisionId =  divisionComboBox.getValue().getDivisionId();
-        String updateCustomerDivision = divisionComboBox.getValue().getDivision();
-        int updateCustomerCountryId = divisionComboBox.getValue().getCountryId();
-        String updateCustomerCountry = String.valueOf(countryComboBox.getValue());
         String updateCustomerPhone = phoneField.getText();
 
-
         try {
-            if (updateCustomerName.isEmpty()) {
+            if (updateCustomerName.isBlank()) {
                 JOptionPane.showMessageDialog(null, "Customer Name is empty.", "Error", JOptionPane.ERROR_MESSAGE);
 
-            } else if (updateCustomerAddress.isEmpty()) {
+            } else if (updateCustomerAddress.isBlank()) {
                 JOptionPane.showMessageDialog(null, "Customer Address is empty.", "Error", JOptionPane.ERROR_MESSAGE);
 
-            } else if (updateCustomerPostalCode.isEmpty()) {
+            } else if (updateCustomerPostalCode.isBlank()) {
                 JOptionPane.showMessageDialog(null, "Customer Zip Code is empty.", "Error", JOptionPane.ERROR_MESSAGE);
 
-            } else if (updateCustomerPhone.isEmpty()) {
+            } else if (updateCustomerPhone.isBlank()) {
                 JOptionPane.showMessageDialog(null, "Customer Phone is empty.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else if (countryComboBox.getValue() == null) {
+                JOptionPane.showMessageDialog(null, "Customer Zip Code is empty.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else if (divisionComboBox.getValue() == null) {
+                JOptionPane.showMessageDialog(null, "Customer Zip Code is empty.", "Error", JOptionPane.ERROR_MESSAGE);
 
             } else {
                 int confirmed = JOptionPane.showConfirmDialog(null, "Do you want to save and return to Customer?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
                 if ( confirmed == JOptionPane.YES_OPTION) {
 
+                    int updateCustomerId = Integer.parseInt(customerIdField.getText());
+                    int updateCustomerDivisionId =  divisionComboBox.getValue().getDivisionId();
+                    String updateCustomerDivision = divisionComboBox.getValue().getDivision();
+                    int updateCustomerCountryId = divisionComboBox.getValue().getCountryId();
+                    String updateCustomerCountry = String.valueOf(countryComboBox.getValue());
+
                     Customer updateCustomer = new Customer(updateCustomerId, updateCustomerName, updateCustomerAddress, updateCustomerPostalCode, updateCustomerDivisionId, updateCustomerDivision, updateCustomerCountryId, updateCustomerCountry, updateCustomerPhone);
                     DBAccess.updateCustomer(updateCustomer);
-
-//                    Division updateCustomerDiv = new Division(updateCustomerDivisionId, updateCustomerDivision, updateCustomerCountryId);
-//                    divisionComboBox.getItems().add(updateCustomerDiv);
 
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
@@ -203,7 +188,7 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * Gets filtered division based on user's country choice
+     * @param event Gets filtered division based on user's country choice
      */
     @FXML
     public void userCountryChoice(ActionEvent event) {
@@ -212,14 +197,11 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * Gets and displays ID of the system timezone
      * Displays selected customer from customer view
      * Displays associated appointments for selected customer
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        timeZoneLabel.setText(TimeZone.getDefault().getID());
 
         Customer selectedCustomer = CustomerController.getSelectedCustomer();
         customerIdField.setEditable(false);
@@ -243,8 +225,8 @@ public class UpdateCustomerController implements Initializable {
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
 
     }
 }

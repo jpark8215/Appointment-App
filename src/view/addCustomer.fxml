@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
 
     <children>
@@ -34,8 +29,6 @@
         <Label layoutX="385.0" layoutY="330.0" prefHeight="25.0" text="*" textFill="RED" />
         <Label layoutX="385.0" layoutY="170.0" prefHeight="25.0" text="*" textFill="RED" />
         <Label layoutX="385.0" layoutY="210.0" prefHeight="25.0" text="*" textFill="RED" />
-        <Label layoutX="467.0" layoutY="25.0" text="User" />
-        <ChoiceBox fx:id="userBox" layoutX="516.0" layoutY="20.0" prefHeight="27.0" prefWidth="57.0" />
       <Label layoutX="100.0" layoutY="290.0" prefHeight="25.0" text="Division" />
       <ComboBox fx:id="countryComboBox" layoutX="205.0" layoutY="250.0" onAction="#userCountryChoice" prefHeight="25.0" prefWidth="149.0" />
       <ComboBox fx:id="divisionComboBox" layoutX="205.0" layoutY="290.0" prefHeight="25.0" prefWidth="149.0" />

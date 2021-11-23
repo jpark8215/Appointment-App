@@ -2,6 +2,7 @@ package controller;
 
 
 import database.DBAccess;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,11 +28,9 @@ import java.util.ResourceBundle;
  * Customer controller class
  */
 public class CustomerController implements Initializable {
-    private static Customer selectedCustomer;
-    public static Customer getSelectedCustomer() { return selectedCustomer; }
 
     @FXML
-    private Button returnButton;
+    private Button appointmentButton;
 
     @FXML
     private TableView<Customer> customerTable;
@@ -59,29 +58,20 @@ public class CustomerController implements Initializable {
 
 
     /**
-     * Opens add appointment view when button is selected
+     * @param event Opens add appointment view
      */
     @FXML
-    void addAppointmentHandler(ActionEvent event) throws IOException {
-
-        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
-
-        if (selectedCustomer == null) {
-            JOptionPane.showMessageDialog(null, "Please select a customer.\n If you are adding an appointment for a new customer, \n please click ADD CUSTOMER button to add a new customer \n before adding an appointment. ", "Error", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-
+    void appointmentButtonHandler(ActionEvent event) throws IOException {
 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addAppointment.fxml")));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
             stage.setScene(new Scene(scene));
             stage.show();
         }
-    }
 
 
     /**
-     * Opens add customer view when button is selected
+     * @param event Opens add customer view
      */
     @FXML
     void addCustomerHandler(ActionEvent event) throws IOException {
@@ -92,9 +82,13 @@ public class CustomerController implements Initializable {
     }
 
 
+    private static Customer selectedCustomer;
+
+    public static Customer getSelectedCustomer() { return selectedCustomer; }
+
     /**
-     * Checks associated appointments for selected customer
-     * Deletes selected customer from database when user confirms
+     * @param event Checks associated appointments for selected customer
+     *              Deletes selected customer from database when user confirms
      */
     @FXML
     void deleteCustomerHandler(ActionEvent event) throws IOException {
@@ -149,8 +143,8 @@ public class CustomerController implements Initializable {
 
 
     /**
-     * Gets selected customer data and loads in customer update
-     * Opens update customer view when button is selected
+     * @param event Gets selected customer data and loads in customer update view
+     *              Opens update customer view when button is selected
      */
     @FXML
     void updateCustomerHandler(ActionEvent event) throws IOException {
@@ -170,42 +164,70 @@ public class CustomerController implements Initializable {
     }
 
 
+//    /**
+//     * Returns to appointment view when button is selected
+//     */
+//    @FXML
+//    void returnButtonHandler(ActionEvent event) throws IOException {
+//
+//        int confirmed = JOptionPane.showConfirmDialog(null, "Return to Appointment View?", "EXIT", JOptionPane.YES_NO_OPTION);
+//        if (confirmed == JOptionPane.YES_OPTION) {
+//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+//            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
+//            stage.setScene(new Scene(scene));
+//            stage.show();
+//        }
+//
+//    }
+
+
     /**
-     * Returns to appointment view when button is selected
+     * @param event Opens report view
      */
     @FXML
-    void returnButtonHandler(ActionEvent event) throws IOException {
-
-        int confirmed = JOptionPane.showConfirmDialog(null, "Return to Appointment View?", "EXIT", JOptionPane.YES_NO_OPTION);
-        if (confirmed == JOptionPane.YES_OPTION) {
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/appointment.fxml")));
-            stage.setScene(new Scene(scene));
-            stage.show();
-        }
-
+    void reportButtonHandle(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/report.fxml")));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
 
+
+
     /**
-     * Initializes customer controller
+     * *****LAMBDA SetCellValueFactory specifies how to populate all cells in tableview columns.
+     *             Using PropertyValueFactory requires getting specified property by looking for property with certain name.
+     *             Property is passed directly using LAMBDA.
      * Gets customer data from database and displays on customer table
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         customerTable.setItems(DBAccess.getAllCustomers());
 
-        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
-        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
-        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision")); ;
-        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
-//        customerDivisionCol.setCellValueFactory(cellData -> {
-//            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerDivision()); });
-//        customerCountryCol.setCellValueFactory(cellData -> {
-//            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerCountry()); });
+//        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+//        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+//        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+//        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
+//        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+//        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
+//        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+
+        customerIdCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerId()); });
+        customerNameCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerName()); });
+        customerAddressCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerAddress()); });
+        customerPostalCodeCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerPostalCode()); });
+        customerPhoneCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerPhone()); });
+        customerDivisionCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerDivision()); });
+        customerCountryCol.setCellValueFactory(cellData -> {
+            return new ReadOnlyObjectWrapper(cellData.getValue().getCustomerCountry()); });
 
     }
 }

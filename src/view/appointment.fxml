@@ -9,30 +9,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentController">
+<AnchorPane prefHeight="450.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentController">
 
     <children>
-        <Button fx:id="ExitButton" layoutX="867.0" layoutY="15.0" mnemonicParsing="false" onAction="#ExitHandler" text="X" />
+        <Button fx:id="ExitButton" layoutX="881.0" layoutY="15.0" mnemonicParsing="false" onAction="#ExitHandler" text="X" />
 
-        <Label layoutX="14.0" layoutY="10.0" text="Appointment">
+        <Label layoutX="15.0" layoutY="10.0" text="Schedule">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-      <RadioButton fx:id="weekAppointment" layoutX="438.0" layoutY="19.0" mnemonicParsing="false" onAction="#weekAppointmentView" text="Week View">
+      <RadioButton fx:id="weekAppointment" layoutX="373.0" layoutY="19.0" mnemonicParsing="false" onAction="#weekAppointmentView" text="Week View">
          <toggleGroup>
             <ToggleGroup fx:id="appointmentView" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="monthAppointment" layoutX="322.0" layoutY="19.0" mnemonicParsing="false" onAction="#monthAppointmentView" text="Month View" toggleGroup="$appointmentView" />
-      <RadioButton fx:id="defaultAppointment" layoutX="210.0" layoutY="19.0" mnemonicParsing="false" onAction="#defaultAppointmentView" selected="true" text="Default View" toggleGroup="$appointmentView" />
-        <TableView fx:id="appointmentTable" layoutX="10.0" layoutY="53.0" prefHeight="297.0" prefWidth="885.0">
+      <RadioButton fx:id="monthAppointment" layoutX="270.0" layoutY="19.0" mnemonicParsing="false" onAction="#monthAppointmentView" text="Month View" toggleGroup="$appointmentView" />
+      <RadioButton fx:id="defaultAppointment" layoutX="163.0" layoutY="19.0" mnemonicParsing="false" onAction="#defaultAppointmentView" selected="true" text="Default View" toggleGroup="$appointmentView" />
+        <TableView fx:id="appointmentTable" layoutX="15.0" layoutY="90.0" prefHeight="340.0" prefWidth="890.0">
             <columns>
                 <TableColumn fx:id="appointmentIdCol" prefWidth="55.0" text="Appt ID" />
-                <TableColumn fx:id="titleCol" prefWidth="65.0" text="Title" />
+                <TableColumn fx:id="titleCol" prefWidth="70.0" text="Title" />
                 <TableColumn fx:id="descriptionCol" prefWidth="90.0" text="Description" />
                 <TableColumn fx:id="locationCol" prefWidth="85.0" text="Location" />
-                <TableColumn fx:id="contactIdCol" prefWidth="100.0" text="Contact ID" />
+                <TableColumn fx:id="contactNameCol" prefWidth="100.0" text="Contact" />
             <TableColumn fx:id="typeCol" text="Type" />
             <TableColumn fx:id="startCol" prefWidth="125.0" text="Start Date/Time" />
             <TableColumn fx:id="endCol" prefWidth="125.0" text="End Date/Time" />
@@ -40,7 +40,10 @@
             <TableColumn fx:id="userIdCol" text="User ID" />
             </columns>
         </TableView>
-      <Button fx:id="customerButton" layoutX="10.0" layoutY="361.0" mnemonicParsing="false" onAction="#customerButtonHandler" text="Customers - Add.Delete.Update Appointment" />
+      <Button fx:id="customerButton" layoutX="470.0" layoutY="15.0" mnemonicParsing="false" onAction="#customerButtonHandler" prefHeight="45.0" prefWidth="80.0" text="Customer" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="deleteButton" layoutX="768.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteButtonHandler" prefHeight="45.0" prefWidth="90.0" text="Delete Appointment" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="addAppointmentButton" layoutX="666.0" layoutY="15.0" mnemonicParsing="false" onAction="#addAppointmentButtonHandler" prefHeight="45.0" prefWidth="90.0" text="Add Appointment" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="updateAppointmentButton" layoutX="563.0" layoutY="15.0" mnemonicParsing="false" onAction="#updateAppointmentButtonHandler" prefHeight="45.0" prefWidth="90.0" text="Update Appointment" textAlignment="CENTER" wrapText="true" />
     </children>
 
 </AnchorPane>

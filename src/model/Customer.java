@@ -40,49 +40,84 @@ public class Customer {
 
     }
 
+//    public static void addCustomer(Customer newCustomer) {
+//    }
+
+    /**
+     * @return customerId
+     */
     public int getCustomerId() { return customerId; }
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
+    /**
+     * @return customerName
+     */
     public String getCustomerName() { return customerName; }
 
     public void setCustomerName(String customerName) { this.customerName = customerName; }
 
+    /**
+     * @return customerAddress
+     */
     public String getCustomerAddress() { return customerAddress; }
 
     public void setCustomerAddress(String customerAddress) { this.customerAddress = customerAddress; }
 
+    /**
+     * @return customerPostalCode
+     */
     public String getCustomerPostalCode() {
         return customerPostalCode;
     }
 
     public void setCustomerPostalCode(String customerPostalCode) { this.customerPostalCode = customerPostalCode; }
 
+    /**
+     * @return customerPhone
+     */
     public String getCustomerPhone() { return customerPhone; }
 
     public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
 
+    /**
+     * @return customerDivisionId
+     */
     public int getCustomerDivisionId() {
         return customerDivisionId;
     }
 
     public void setCustomerDivisionId(int customerDivisionId) { this.customerDivisionId = customerDivisionId; }
 
+    /**
+     * @return customerDivision
+     */
     public String getCustomerDivision() { return customerDivision; }
 
     public void setCustomerDivision(String customerDivision) { this.customerDivision = customerDivision; }
 
+    /**
+     * @return customerCountryId
+     */
     public int getCustomerCountryId() { return customerCountryId; }
 
     public void setCustomerCountryId(int customerCountryId) { this.customerCountryId = customerCountryId; }
 
+    /**
+     * @return customerCountry
+     */
     public String getCustomerCountry() { return customerCountry; }
 
     public void setCustomerCountry(String customerCountry) { this.customerCountry = customerCountry; }
 
-//    public static void addCustomer(Customer newCustomer) {
-//    }
+
+    /**
+     * @return customerId and customerName in string
+     */
+    @Override
+    public String toString() {return (customerId + " " + customerName);}
 }
+
 
