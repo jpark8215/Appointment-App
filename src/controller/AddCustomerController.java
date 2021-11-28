@@ -80,7 +80,9 @@ public class AddCustomerController implements Initializable {
      */
     @FXML
     void CancelButtonHandler(ActionEvent event) throws IOException {
+
         int confirmed = JOptionPane.showConfirmDialog(null, "Cancel and return to customer view?", "EXIT", JOptionPane.YES_NO_OPTION);
+
         if (confirmed == JOptionPane.YES_OPTION) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/customer.fxml")));
@@ -91,7 +93,9 @@ public class AddCustomerController implements Initializable {
 
 
     /**
-     * @param event Checks customer requirements and adds to database
+     * Gets data from text fields and combo boxes
+     * Checks forms are completed
+     * @param event Adds to database
      */
     @FXML
     void saveButtonHandler(ActionEvent event) {

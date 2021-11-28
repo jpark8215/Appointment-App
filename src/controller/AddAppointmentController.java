@@ -116,7 +116,10 @@ public class AddAppointmentController implements Initializable {
 
 
     /**
-     * @param event Checks appointment requirements, changes time to UTC, and adds appointment to database
+     * Gets data from text fields, date picker, and combo boxes
+     * Changes time to UTC
+     * Checks forms are completed, business hour requirement, and conflict of appointment
+     * @param event Adds appointment to database
      */
     @FXML
     void SaveHandler(ActionEvent event) {
