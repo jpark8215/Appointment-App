@@ -110,7 +110,7 @@ public class MonthController implements Initializable {
     public static Appointment getSelectedAppointment() { return selectedAppointment; }
 
     /**
-     * @param event Gets selected appointment data and loads in update appointment view
+     * @param event Gets selected appointment data to load in update appointment view
      *              Opens update appointment view
      */
     @FXML
@@ -157,8 +157,7 @@ public class MonthController implements Initializable {
 
     /**
      * @param event Deletes selected appointment
-     *              Confirms user choice and displays appointment ID
-     * LAMBDA Displays deleted appointment information
+     *              Displays appointmentId and type of deleted appointment
      */
     @FXML
     void deleteButtonHandler(ActionEvent event) throws IOException {
@@ -176,13 +175,13 @@ public class MonthController implements Initializable {
                     DBAccess.deleteAppointment(selectedAppointment);
                     monthAppointmentTable.setItems(DBAccess.getAllAppointments());
 
-                    Platform.runLater(() -> {
+//                    Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Cancel confirmation");
 //                        alert.setHeaderText("Do you want to delete the following appointment?");
                         alert.setHeaderText( "Appointment ID : " + selectedAppointment.getAppointmentId() + " & Type : " + selectedAppointment.getType() + " deleted");
                         alert.showAndWait();
-                    });
+//                    });
                 } else {
 
                     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -232,6 +231,7 @@ public class MonthController implements Initializable {
 
 
     /**
+     * Gets current month and displays it
      * Gets appointment data from database for the month and loads data into appointment table
      * Sets combo box on contact column in table
      */

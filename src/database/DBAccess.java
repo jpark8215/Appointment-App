@@ -21,7 +21,7 @@ import java.util.Calendar;
 public class DBAccess {
 
     /**
-     * Gets all customers from database
+     * Gets all customers from database customers, division, countries tables
      *
      * @return customerObservableList
      */
@@ -29,9 +29,10 @@ public class DBAccess {
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from customers" +
+            String sql = "SELECT * FROM customers" +
                     " JOIN first_level_divisions AS f ON customers.division_ID = f.division_ID" +
                     " JOIN countries ON f.country_ID = countries.country_ID";
+
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -58,7 +59,7 @@ public class DBAccess {
     }
 
     /**
-     * Adds new customer to database
+     * Adds new customer to database customers table
      */
     public static void addCustomer(Customer newCustomer) {
 
@@ -87,7 +88,7 @@ public class DBAccess {
 
 
     /**
-     * Updates customer to database
+     * Updates customer in database customers table selected by customerID
      */
     public static void updateCustomer(Customer updateCustomer) {
 
@@ -116,7 +117,7 @@ public class DBAccess {
 
 
     /**
-     * Deletes selected customer from database
+     * Deletes selected customer from database customers table selected by customerID
      */
     public static void deleteCustomer(Customer selectedCustomer) {
         try {
@@ -135,7 +136,7 @@ public class DBAccess {
 
 
     /**
-     * Gets all countries from database
+     * Gets all countries from database countries table
      *
      * @return countryObservableList
      */
@@ -143,7 +144,7 @@ public class DBAccess {
         ObservableList<Country> countryObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * From countries";
+            String sql = "SELECT * FROM countries";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -163,14 +164,14 @@ public class DBAccess {
 
 
     /**
-     * Gets country ID from the country selected in combo box
+     * Gets country ID from the country selected in country combo box
      *
      * @return country ID
      */
     public static int getCountryId(ComboBox<Country> userCountry) {
 
         try {
-            String sql = "Select Country_ID From countries " +
+            String sql = "SELECT Country_ID From countries " +
                     "WHERE Country_Name = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
@@ -186,7 +187,7 @@ public class DBAccess {
 
 
     /**
-     * Gets all divisions from database
+     * Gets all divisions from database divisions table
      *
      * @return divisionObservableList
      */
@@ -194,7 +195,7 @@ public class DBAccess {
         ObservableList<Division> divisionObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from first_level_divisions";
+            String sql = "SELECT * From first_level_divisions";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -215,7 +216,7 @@ public class DBAccess {
 
 
     /**
-     * Gets filtered Divisions by user's country choice
+     * Gets filtered divisions depending on countryID of user's country choice
      *
      * @return filteredDivisionObservableList
      */
@@ -223,7 +224,7 @@ public class DBAccess {
         ObservableList<Division> filteredDivisionObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from first_level_divisions";
+            String sql = "SELECT * From first_level_divisions";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -248,14 +249,14 @@ public class DBAccess {
 
 
     /**
-     * Gets division ID from the division selected in combo box
+     * Gets division ID from the division selected in division combo box
      *
      * @return division ID
      */
     public static int getDivisionId(ComboBox<Division> userDivision) {
 
         try {
-            String sql = "Select Division_ID From first_level_divisions " +
+            String sql = "SELECT Division_ID From first_level_divisions " +
                     "WHERE Division_Name = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
@@ -271,7 +272,8 @@ public class DBAccess {
 
 
     /**
-     * Gets all appointments from database
+     * Gets all appointments from database appointments and contacts tables
+     * Converts UTC to local time
      *
      * @return appointmentObservableList
      */
@@ -280,7 +282,7 @@ public class DBAccess {
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from appointments " +
+            String sql = "SELECT * FROM appointments " +
                     "JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -319,7 +321,8 @@ public class DBAccess {
 
 
     /**
-     * Gets associated appointments with customer
+     * Gets associated appointments with customer from database appointments and contacts tables
+     * Converts UTC to local time
      *
      * @return associatedAppointmentObservableList
      */
@@ -328,7 +331,7 @@ public class DBAccess {
 
         ObservableList<Appointment> associatedAppointmentObservableList = FXCollections.observableArrayList();
         try {
-            String sql = "Select * from appointments " +
+            String sql = "SELECT * From appointments " +
                     "JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -371,7 +374,7 @@ public class DBAccess {
 
 
     /**
-     * Adds new appointment to database
+     * Adds new appointment to database appointments table
      */
     public static void addAppointment(Appointment newAppointment) {
 
@@ -401,7 +404,7 @@ public class DBAccess {
 
 
     /**
-     * Updates appointment to database
+     * Updates appointment in database appointments table selected by appointmentID
      */
     public static void updateAppointment(Appointment updateAppointment) {
 
@@ -435,7 +438,7 @@ public class DBAccess {
 
 
     /**
-     * Deletes selected appointment from database
+     * Deletes selected appointment from database appointments table selected by appointmentID
      */
     public static void deleteAppointment(Appointment selectedAppointment) {
         try {
@@ -453,7 +456,9 @@ public class DBAccess {
 
 
     /**
-     * Gets monthly appointments from database
+     * Gets appointments for the month from database appointments table
+     * Gets current month and the first and last date of the month
+     * Converts UTC to local time
      * @return monthlyAppointmentList
      */
 
@@ -469,7 +474,7 @@ public class DBAccess {
         ObservableList<Appointment> monthlyAppointmentList = FXCollections.observableArrayList();
 
         try {
-            String sql = "Select * from appointments " +
+            String sql = "SELECT * from appointments " +
                     "JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID " +
                     "WHERE Start BETWEEN ? AND ? ";
 
@@ -517,7 +522,9 @@ public class DBAccess {
 
 
     /**
-     * Gets weekly appointments from database
+     * Gets appointments for the week from database appointments table
+     * Gets current week and the first and last date of the week
+     * Converts UTC to local time
      * @return weeklyAppointmentList
      */
 
@@ -578,7 +585,7 @@ public class DBAccess {
 
 
     /**
-     * Gets all users from database
+     * Gets all users from database users table
      * @return userObservableList
      */
 
@@ -613,7 +620,7 @@ public class DBAccess {
 
 
     /**
-     * Gets all contacts from database
+     * Gets all contacts from database contacts table
      *
      * @return contactObservableList
      */
@@ -645,7 +652,7 @@ public class DBAccess {
 
 
     /**
-     * @param newContact Adds new contact to database
+     * @param newContact Adds new contact to database contacts table
      */
     public static void addContact(Contact newContact) {
         try {
@@ -665,28 +672,29 @@ public class DBAccess {
     }
 
 
+//    /**
+//     * @param newContact Gets contact information by contactName
+//     */
+//    public static void getContactId(Contact newContact) {
+//        try {
+//            String sql = "SELECT FROM contacts WHERE Contact_Name = ?";
+//
+//            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+//
+//            ps.setString(1, newContact.getContactName());
+//            ps.executeUpdate();
+//
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//
+//        }
+//    }
+
+
     /**
-     * @param newContact Gets contact by contactName
-     */
-    public static void getContactId(Contact newContact) {
-        try {
-            String sql = "SELECT FROM contacts WHERE Contact_Name = ?";
-
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-
-            ps.setString(1, newContact.getContactName());
-            ps.executeUpdate();
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-
-        }
-    }
-
-
-    /**
-     * Checks database for conflicting appointments for new appointment
+     * Checks database for conflicting appointments before adding new appointment
+     * Checks start and end times by customerID and appointmentID
      * @return Boolean result
      */
     public static boolean getConflictedAppointment (Appointment newAppointment) {
@@ -694,7 +702,7 @@ public class DBAccess {
         try {
             String sql =  "SELECT * FROM appointments "
                     + "WHERE (( ? BETWEEN Start AND End ) OR ( ? BETWEEN Start AND End ) OR ( ? < Start AND ? > End)) "
-                    + "AND ( User_ID = ? AND Appointment_ID != ? )";
+                    + "AND ( Customer_ID = ? AND Appointment_ID != ? )";
 
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
@@ -702,7 +710,7 @@ public class DBAccess {
             ps.setTimestamp(2, Timestamp.valueOf(newAppointment.getEndDateTime()));
             ps.setTimestamp(3, Timestamp.valueOf(newAppointment.getStartDateTime()));
             ps.setTimestamp(4, Timestamp.valueOf(newAppointment.getEndDateTime()));
-            ps.setInt(5, newAppointment.getUserId());
+            ps.setInt(5, newAppointment.getCustomerId());
             ps.setInt(6, newAppointment.getAppointmentId());
 
             ResultSet rs = ps.executeQuery();
@@ -720,9 +728,9 @@ public class DBAccess {
 
 
     /**
-     //     * Checks if there are appointment within 15 minutes
-     //     * @return Appointment ID
-     //     */
+     * Checks if there are appointments within 15 minutes by UserID
+     * @return Appointment ID
+     */
     public static String  appointmentInFifteenID() {
 
         String appointmentId = null;
@@ -753,9 +761,9 @@ public class DBAccess {
 
 
     /**
-     //     * Checks if there are appointment within 15 minutes
-     //     * @return DateTime
-     //     */
+     * Checks if there are appointments within 15 minutes by userID
+     * @return DateTime
+     */
     public static String  appointmentInFifteenTime() {
 
         String startDateTime = null;

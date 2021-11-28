@@ -130,7 +130,7 @@ public class AppointmentController implements Initializable {
 
     /**
      * @param event Deletes selected appointment
-     *              Displays deleted appointment information
+     *              Displays appointmentId and type of deleted appointment
      */
     @FXML
     void deleteButtonHandler(ActionEvent event) throws IOException {
@@ -207,7 +207,7 @@ public class AppointmentController implements Initializable {
 
     /**
      * *****LAMBDA Platform.runLater() used it prevents the app being unresponsive when there are many appointments to compare and load.
-     * Checks if there is an appointment within 15 minutes
+     *             Checks appointments in database if there is an appointment within 15 minutes
      * Gets appointment data from database and loads data into appointment table
      * Sets combo box on contact column in table
      */

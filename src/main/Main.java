@@ -35,7 +35,7 @@ public class Main extends Application {
     }
 
     /**
-     * @param args Creates log.txt file
+     * @param args Creates login_activity.txt file
      *             Makes and closes connections
      */
     public static void main(String[] args) throws Exception {

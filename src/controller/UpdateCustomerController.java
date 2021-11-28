@@ -77,7 +77,7 @@ public class UpdateCustomerController implements Initializable {
 
     /**
      * @param event Deletes selected associated appointment
-     *              Displays deleted appointment information
+     *              Displays appointmentId and type of deleted appointment
      */
     @FXML
     void DeleteAppointmentHandler(ActionEvent event) throws IOException {
@@ -130,7 +130,9 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * @param event Checks customer requirements and updates selected customer
+     * Gets data from text fields and combo boxes
+     * Checks forms are completed
+     * @param event Updates selected customer
      */
     @FXML
     void saveButtonHandler(ActionEvent event) {
@@ -197,7 +199,7 @@ public class UpdateCustomerController implements Initializable {
 
 
     /**
-     * Displays selected customer from customer view
+     * Gets and loads selected customer data in fields and combo boxes
      * Displays associated appointments for selected customer
      */
     @Override

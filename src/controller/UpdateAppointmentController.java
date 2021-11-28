@@ -95,7 +95,10 @@ public class UpdateAppointmentController implements Initializable {
 
 
     /**
-     * @param event Checks appointment requirements and updates selected appointment
+     * Gets data from text fields, date picker, and combo boxes
+     * Changes time to UTC
+     * Checks forms are completed, business hour requirement, and conflict of appointment
+     * @param event Updates selected appointment
      */
     @FXML
     void SaveHandler(ActionEvent event) {
@@ -206,7 +209,7 @@ public class UpdateAppointmentController implements Initializable {
 
 
     /**
-     * Gets selected appointment info in fields and combo boxes
+     * Gets and loads selected appointment data in fields and combo boxes
      * Adds items in hour and minute combo boxes
      */
     @Override

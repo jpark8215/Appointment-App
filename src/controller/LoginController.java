@@ -55,7 +55,8 @@ public class LoginController implements Initializable {
 
     /**
      * @param event Checks login ID and password and opens appointment view
-     *              Logs login attempts in log.txt
+     *              Logs login attempts in login_activity.txt
+     *              Displays login error message in French when locale language is French
      */
     @FXML
     void loginHandler(ActionEvent event) {

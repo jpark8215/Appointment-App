@@ -63,7 +63,7 @@ public class ReportController {
 
 
     /**
-     * @return number of appointments sorted by type
+     * @return Returns number of appointments sorted by type
      */
     public String reportByType() throws SQLException {
 
@@ -104,6 +104,7 @@ public class ReportController {
 
 
     /**
+     * Changes UTC to local time
      * @return Returns appointment info per contact
      */
     public String reportForContact() throws SQLException {
@@ -165,6 +166,7 @@ public class ReportController {
 
 
     /**
+     * Changed UTc to local time
      * @return Returns appointment info per user
      */
     public String reportForUser() throws SQLException {

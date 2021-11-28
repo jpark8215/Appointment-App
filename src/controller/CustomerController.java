@@ -88,7 +88,7 @@ public class CustomerController implements Initializable {
 
     /**
      * @param event Checks associated appointments for selected customer
-     *              Deletes selected customer from database when user confirms
+     *              Deletes selected customer from database
      */
     @FXML
     void deleteCustomerHandler(ActionEvent event) throws IOException {
@@ -143,7 +143,7 @@ public class CustomerController implements Initializable {
 
 
     /**
-     * @param event Gets selected customer data and loads in customer update view
+     * @param event Gets selected customer data to load in customer update view
      *              Opens update customer view when button is selected
      */
     @FXML
